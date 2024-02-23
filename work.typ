@@ -39,7 +39,7 @@
   //   - downgradeon: The date downgrade on which the downgrade can happen
   //   - until: Document will be declassified on this date, i.e. $date+25y, $date+75y
   classified,
-  // Fields for CIU Block
+  // Fields for CUI Block
   // Required Fields:
   //   - controlledby: Array of controllers, ("Division 2", "Office 3")
   //   - categories: Categories ("OPSEC, PRVCY")
