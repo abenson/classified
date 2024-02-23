@@ -87,13 +87,15 @@
 // Show the bibliography, if one is attached.
 
 #let showBibliography(
-  // Path to the bibliography file, i.e. "reference.yaml"
-  biblioFile
+  // Print a bilbiography if given one.
+  // This behavior is necessary due to the way typst handles paths.
+  // This will likely be updated to use the new path object when added. Issue #971
+  biblio
 ) = {
-  if biblioFile != none {
+  if biblio != none {
     show bibliography: set text(1em)
     show bibliography: set par(first-line-indent: 0em)
-    bibliography(biblioFile, title: [References], style: "ieee")
+    biblio
   }
 }
 
