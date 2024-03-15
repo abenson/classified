@@ -282,3 +282,128 @@
   
   showBibliography(bib)
 }
+
+
+#let title_slide(
+    title: none,
+    subtitle: none,
+    version: none,
+    author: none,
+    date: none,
+    classified: none,
+    classification: none,
+    cui: none,
+    wide: false
+) = {
+
+    set text(16pt)
+
+    // Set the classification for the document.
+    //
+    // If there is no classification, but a CUI block exists, then the document
+    // is CUI.
+    //
+    // There should be no CUI without a CUI block, but if the document is
+    // UNCLASSIFIED, then it should be set in `classified.overall`.
+
+    if(classification == none) {
+        if classified != none {
+          classification = classified.overall
+        } else if cui != none {
+          classification = "CUI"
+        }
+    }
+
+    let classcolor = colorForClassification(classification)
+    let overallclasscolor = colorForClassification(classified.overall)
+
+    let header = align(center, text(size: 18pt, fill: classcolor, strong(classification)))
+    let footer = [
+        #h(1fr) #text(size: 18pt, fill: classcolor, strong(classification))
+        #h(1fr) #counter(page).display()
+    ]
+    let paper = "presentation-4-3"
+    if(wide) {
+        let paper = "presentation-16-9"
+    }
+    page(
+        margin: 15%,
+        paper: paper,
+        header: header,
+        footer: footer,
+        align(horizon)[
+          #showTitles(
+            title: title,
+            subtitle: subtitle,
+            version: version,
+            author: author,
+            date: date)
+            #if classification != none {
+                align(center)[
+                    The Overall Classification of this Document is: \
+                    #text(size: 20pt, fill: overallclasscolor, strong(classified.overall))
+                ]
+            }
+            #align(center,drawClassificationBlocks(classified, cui))
+        ]
+    )
+}
+
+#let slide(
+    title: none,
+    classification: "",
+    wide: false,
+    body
+) = {
+    set text(size: 16pt)
+    show link: underline
+
+    let classcolor = colorForClassification(classification)
+
+    let header = align(center, text(size: 18pt, fill: classcolor, strong(classification)))
+    let footer = [
+        #h(1fr) #text(size: 18pt, fill: classcolor, strong(classification))
+        #h(1fr) #counter(page).display()
+    ]
+    let paper = "presentation-4-3"
+    if(wide) {
+        let paper = "presentation-16-9"
+    }
+    page(
+        margin: 15%,
+        paper: paper,
+        header: header,
+        footer: footer)[
+        #if(title != none) { text(24pt)[*#title*] }
+        #body
+    ]
+}
+
+
+#let source_slide(
+    classification: "",
+    wide: false,
+    bib: none
+) = {
+    set text(size: 16pt)
+    show link: underline
+
+    let classcolor = colorForClassification(classification)
+
+    let header = align(center, text(size: 18pt, fill: classcolor, strong(classification)))
+    let footer = [
+        #h(1fr) #text(size: 18pt, fill: classcolor, strong(classification))
+        #h(1fr) #counter(page).display()
+    ]
+    let paper = "presentation-4-3"
+    if(wide) {
+        let paper = "presentation-16-9"
+    }
+    page(
+        margin: 15%,
+        paper: paper,
+        header: header,
+        footer: footer)[
+			#showBibliography(bib)
+		]
+}
