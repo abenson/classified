@@ -52,6 +52,7 @@
 
   if classified != none and regex("UNCLASSIFIED|CUI") not in classified.overall {
     dcablock = [
+       #set align(left)
        *Classified By:* #classified.at("by", default: "MISSING!") \
        *Derived From:* #classified.at("source", default: "Multiple Sources") \
     ]
@@ -70,6 +71,7 @@
 
   if cui != none {
     cuiblock = rect[
+      #set align(left)
       *Controlled By:* #cui.at("controlledby", default: ("MISSING!",)).join(strong("\nControlled By: "))\
       *Categories:* #cui.at("categories", default: "MISSING!") \
       *Dissemination:* #cui.at("dissemination", default: "MISSING!") \
