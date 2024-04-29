@@ -148,6 +148,7 @@
   classified: none,
   cui: none,
   bib: none,
+  numbering: none,
   paper: "us-letter",
   body
 ) = {
@@ -162,6 +163,16 @@
   } else if cui != () {
     classification = "CUI"
   }
+
+  set heading(numbering: numbering)
+  show heading: it => [
+    #if numbering != none {
+      set text(12pt, weight: "bold")
+      block(it)
+    } else {
+      it
+    }
+  ]
 
   let classcolor = colorForClassification(classification)
   let header = align(center, text(fill: classcolor, strong(classification)))
@@ -210,6 +221,11 @@
   set text(size: 12pt)
   show link: underline
   set heading(numbering: "1.1.1. ")
+
+  show heading: it => [
+    #set text(12pt, weight: "bold")
+    #block(it)
+  ]
 
   let classification = none
 
