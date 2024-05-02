@@ -53,20 +53,19 @@
 
   if classified != none and regex("UNCLASSIFIED|CUI") not in classified.overall {
     dcablock = [
-       #set align(left)
-       *Classified By:* #classified.at("by", default: "MISSING!") \
-       *Derived From:* #classified.at("source", default: "Multiple Sources") \
+      #set align(left)
+      *Classified By:* #classified.at("by", default: "MISSING!") \
+      *Derived From:* #classified.at("source", default: "Multiple Sources") \
+      #if classified.at("downgradeto", default: []) != [] {
+         [*Downgrade To:* #classified.downgradeto \ ]
+      }
+      #if classified.at("downgradeon", default: []) != [] {
+         [*Downgrade On:* #classified.downgradeon \ ]
+      }
+      #if classified.at("until", default: []) != []{
+         [*Declassify On:* #classified.until \ ]
+      }
     ]
-    if classified.at("downgradeto", default: []) != [] {
-       dcablock += [*Downgrade To:* #classified.downgradeto \ ]
-    }
-    if classified.at("downgradeon", default: []) != [] {
-       dcablock += [*Downgrade On:* #classified.downgradeon \ ]
-  }
-
-  if classified.at("until", default: []) != []{
-       dcablock += [*Declassify On:* #classified.until\ ]
-  }
     dcablock = rect(dcablock)
   }
 
