@@ -221,6 +221,7 @@
   border: true,
   bib: none,
   paper: "us-letter",
+  front: none,
   body
 ) = {
   set par(justify: true)
@@ -302,6 +303,8 @@
   )
   set align(top)
   counter(page).update(1)
+
+  front
 
   outline()
 
