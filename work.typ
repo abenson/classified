@@ -295,6 +295,8 @@
     #h(1fr) #counter(page).display("i")
   ]
 
+  page(paper, background: none, align(center,"This page intentionally left blank."))
+
   set page(
     paper: paper,
     header: header,
