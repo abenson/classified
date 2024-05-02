@@ -4,11 +4,14 @@
 //Pick a color based on the classification string
 #let colorForClassification(
   classification,
+  sci,
   disableColor: false
 ) = {
   let classcolor = black
   if disableColor == false and classification != none {
-    if regex("UNCLASSIFIED") in classification {
+    if sci {
+      classcolor = rgb("#fce83a") // Yellow for any SCI (CLASS//SC,I//ETC)
+    } else if regex("UNCLASSIFIED") in classification {
        classcolor = rgb("#007a33") // Green for UNCLASSIFIED[//FOUO]
     } else if regex("CUI|CONTROLLED") in classification {
        classcolor = rgb("#502b85") // Purple for C(ontrolled) U(Unclass) I(nfo)
@@ -20,8 +23,6 @@
        classcolor = rgb("#ff8c00") // Orange for Collateral TS
     } else if regex("SECRET") in classification {
        classcolor = rgb("#c8102e") // Red for SECRET
-    } else if regex("//.*//") in classification {
-       classcolor = rgb("#fce83a") // Yellow for any SCI (CLASS//SC,I//ETC)
     } // else, black because we don't know
   }
   classcolor
@@ -174,7 +175,12 @@
     }
   ]
 
-  let classcolor = colorForClassification(classification)
+  let sci = false
+  if ("sci" in classified) {
+    sci = classified.sci
+  }
+
+  let classcolor = colorForClassification(classification, sci)
   let header = align(center, text(fill: classcolor, strong(classification)))
   let footer = [
     #h(1fr) #text(fill: classcolor, strong(classification))
@@ -213,6 +219,7 @@
   cui: none,
   version: none,
   logo: none,
+  border: true,
   bib: none,
   paper: "us-letter",
   body
@@ -239,9 +246,24 @@
     classification = "CUI"
   }
 
-  let classcolor = colorForClassification(classification)
+  let sci = false
+  if ("sci" in classified) {
+    sci = classified.sci
+  }
 
-  set page(paper: paper)
+  let classcolor = colorForClassification(classification, sci)
+
+  if border == true {
+    border = rect(
+        width: 100%-1in,
+        height: 100%-1in,
+        stroke: 0.5in+classcolor
+    )
+  } else if border == false {
+    border = none
+  }
+
+  set page(paper: paper, background: border)
   set align(horizon)
 
   showTitles(
@@ -276,7 +298,8 @@
   set page(
     paper: paper,
     header: header,
-    footer: footer
+    footer: footer,
+    background: none
   )
   set align(top)
   counter(page).update(1)
@@ -332,8 +355,8 @@
         }
     }
 
-    let classcolor = colorForClassification(classification)
-    let overallclasscolor = colorForClassification(classified.overall)
+    let classcolor = colorForClassification(classification, sci)
+    let overallclasscolor = colorForClassification(classified.overall, sci)
 
     let header = align(center, text(size: 18pt, fill: classcolor, strong(classification)))
     let footer = [
@@ -376,7 +399,7 @@
     set text(size: 16pt)
     show link: underline
 
-    let classcolor = colorForClassification(classification)
+    let classcolor = colorForClassification(classification, sci)
 
     let header = align(center, text(size: 18pt, fill: classcolor, strong(classification)))
     let footer = [
@@ -406,7 +429,7 @@
     set text(size: 16pt)
     show link: underline
 
-    let classcolor = colorForClassification(classification)
+    let classcolor = colorForClassification(classification, sci)
 
     let header = align(center, text(size: 18pt, fill: classcolor, strong(classification)))
     let footer = [
