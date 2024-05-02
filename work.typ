@@ -276,7 +276,7 @@
 
   // 3in provides a decent logo or a decent size gap
   if logo != none {
-    align(center, image(height: 3in, logo))
+    align(center, logo)
   } else {
     rect(height: 3in, stroke: none)
   }
