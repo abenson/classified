@@ -81,7 +81,7 @@
   place(bottom,  float: true,
     grid( columns: ( 1fr, 1fr ),
       dcablock,
-      cuiblock
+      align(right,cuiblock)
     )
   )
 }
