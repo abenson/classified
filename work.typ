@@ -175,8 +175,10 @@
   ]
 
   let sci = false
-  if ("sci" in classified) {
-    sci = classified.sci
+  if classified != none {
+    if ("sci" in classified) {
+      sci = classified.sci
+    }
   }
 
   let classcolor = colorForClassification(classification, sci)
@@ -247,8 +249,10 @@
   }
 
   let sci = false
-  if ("sci" in classified) {
-    sci = classified.sci
+  if classified != none {
+    if ("sci" in classified) {
+      sci = classified.sci
+    }
   }
 
   let classcolor = colorForClassification(classification, sci)
