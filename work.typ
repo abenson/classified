@@ -257,13 +257,17 @@
 
   let classcolor = colorForClassification(classification, sci)
 
-  if border == true {
+  if border == true or type(border) == color {
+    let border_color = classcolor
+    if type(border) == color {
+      border_color = border
+    }
     border = rect(
         width: 100%-1in,
         height: 100%-1in,
-        stroke: 0.5in+classcolor
+        stroke: 0.5in+border_color
     )
-  } else if border == false {
+  } else {
     border = none
   }
 
