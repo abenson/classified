@@ -158,9 +158,9 @@
 
   let classification = ""
 
-  if classified != () {
+  if classified != none {
     classification = classified.overall
-  } else if cui != () {
+  } else if cui != none {
     classification = "CUI"
   }
 
