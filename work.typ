@@ -262,11 +262,19 @@
     if type(border) == color {
       border_color = border
     }
-    border = rect(
-        width: 100%-1in,
-        height: 100%-1in,
-        stroke: 0.5in+border_color
-    )
+    if border_color == color.black {
+      border = rect(
+          width: 100%-1in,
+          height: 100%-1in,
+          stroke: 6pt+border_color
+      )
+    } else {
+          border = rect(
+          width: 100%-1in,
+          height: 100%-1in,
+          stroke: 0.5in+border_color
+      )
+    }
   } else {
     border = none
   }
