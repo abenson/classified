@@ -120,7 +120,7 @@
     align(center, text(14pt, title_intro))
   }
   if title != none {
-    align(center, text(25pt, weight: "bold", title))
+    align(center, text(25pt, title))
   }
   if subtitle != none {
     align(center, text(17pt, subtitle))
