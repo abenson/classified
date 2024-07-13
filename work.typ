@@ -136,79 +136,6 @@
   }
 }
 
-// Simple title block at the top, set some headers, footers, and draw a
-// bibliography, that's it.
-#let simple(
-  title_intro: none,
-  title: none,
-  subtitle: none,
-  version: none,
-  author: none,
-  date: none,
-  classified: none,
-  cui: none,
-  bib: none,
-  numbering: none,
-  paper: "us-letter",
-  body
-) = {
-  set par(justify: true)
-  set text(size: 12pt)
-  show link: underline
-
-  let classification = ""
-
-  if classified != none {
-    classification = classified.overall
-  } else if cui != none {
-    classification = "CUI"
-  }
-
-  set heading(numbering: numbering)
-  show heading: it => [
-    #if numbering != none {
-      set text(12pt, weight: "bold")
-      block(it)
-    } else {
-      it
-    }
-  ]
-
-  let sci = false
-  if classified != none {
-    if ("sci" in classified) {
-      sci = classified.sci
-    }
-  }
-
-  let classcolor = colorForClassification(classification, sci)
-  let header = align(center, text(fill: classcolor, strong(classification)))
-  let footer = [
-    #h(1fr) #text(fill: classcolor, strong(classification))
-    #h(1fr) #counter(page).display()
-  ]
-
-  set page(
-    paper: paper,
-    header: header,
-    footer: footer
-  )
-
-  showTitles(
-    title_intro: title_intro,
-    title: title,
-    subtitle: subtitle,
-    version: version,
-    author: author,
-    date: date)
-
-  drawClassificationBlocks(classified, cui)
-
-  body
-  
-  showBibliography(bib)
-}
-
 // A full report format.
 #let report(
   title_intro: none,
@@ -221,6 +148,7 @@
   version: none,
   logo: none,
   border: true,
+  title_page: false,
   bib: none,
   paper: "us-letter",
   front: none,
@@ -257,77 +185,86 @@
 
   let classcolor = colorForClassification(classification, sci)
 
-  if border == true or type(border) == color {
-    let border_color = classcolor
-    if type(border) == color {
-      border_color = border
-    }
-    if border_color == color.black {
-      border = rect(
-          width: 100%-1in,
-          height: 100%-1in,
-          stroke: 6pt+border_color
-      )
+  if title_page {
+    if border == true or type(border) == color {
+      let border_color = classcolor
+      if type(border) == color {
+        border_color = border
+      }
+      if border_color == color.black {
+        border = rect(
+            width: 100%-1in,
+            height: 100%-1in,
+            stroke: 6pt+border_color
+        )
+      } else {
+            border = rect(
+            width: 100%-1in,
+            height: 100%-1in,
+            stroke: 0.5in+border_color
+        )
+      }
     } else {
-          border = rect(
-          width: 100%-1in,
-          height: 100%-1in,
-          stroke: 0.5in+border_color
-      )
+      border = none
     }
-  } else {
-    border = none
+
+    set page(paper: paper, background: border)
+    set align(horizon)
+
+    showTitles(
+      title_intro: title_intro,
+      title: title,
+      subtitle: subtitle,
+      version: version,
+      author: author,
+      date: date)
+
+    // 3in provides a decent logo or a decent size gap
+    if logo != none {
+      align(center, logo)
+    } else {
+      rect(height: 3in, stroke: none)
+    }
+
+    if classification != none {
+      align(center)[The Overall Classification of this Document is]
+      align(center, text(fill: classcolor, size: 17pt, strong(classification)))
+    }
+    drawClassificationBlocks(classified, cui)
   }
 
-  set page(paper: paper, background: border)
-  set align(horizon)
-
-  showTitles(
-    title_intro: title_intro,
-    title: title,
-    subtitle: subtitle,
-    version: version,
-    author: author,
-    date: date)
-
-  // 3in provides a decent logo or a decent size gap
-  if logo != none {
-    align(center, logo)
-  } else {
-    rect(height: 3in, stroke: none)
-  }
-
-  if classification != none {
-    align(center)[The Overall Classification of this Document is]
-    align(center, text(fill: classcolor, size: 17pt, strong(classification)))
-  }
-
-  drawClassificationBlocks(classified, cui)
-
-  // The outline and other "front matter" pages should use Roman numerals.
   let header = align(center, text(fill: classcolor, strong(classification)))
-  let footer = [
-    #h(1fr) #text(fill: classcolor, strong(classification))
-    #h(1fr) #counter(page).display("i")
-  ]
 
-  page(paper, background: none, align(center,"This page intentionally left blank."))
+  if title_page {
+    // The outline and other "front matter" pages should use Roman numerals.
+    let footer = [
+      #h(1fr) #text(fill: classcolor, strong(classification))
+      #h(1fr) #counter(page).display("i")
+    ]
 
-  set page(
-    paper: paper,
-    header: header,
-    footer: footer,
-    background: none
-  )
-  set align(top)
-  counter(page).update(1)
+    page(paper,
+      background: none,
+      align(center+horizon,"This page intentionally left blank."))
+    
+    set page(
+      paper: paper,
+      header: header,
+      footer: footer,
+      background: none
+    )
+    set align(top)
+    counter(page).update(1)
 
-  front
+    front
 
-  outline()
+    outline()
+
+    pagebreak(weak: true, to:"odd")
+
+  }
 
   // Body pages should be numbered with standard Arabic numerals.
-  footer = [
+  let footer = [
     #h(1fr) #text(fill: classcolor, strong(classification))
     #h(1fr) #counter(page).display("1")
   ]
@@ -338,133 +275,19 @@
     footer: footer
   )
   counter(page).update(1)
-  
+
+  if not title_page {
+    showTitles(
+      title_intro: title_intro,
+      title: title,
+      subtitle: subtitle,
+      version: version,
+      author: author,
+      date: date)
+    drawClassificationBlocks(classified, cui)
+}
+
   body
   
   showBibliography(bib)
-}
-
-
-#let title_slide(
-    title: none,
-    subtitle: none,
-    version: none,
-    author: none,
-    date: none,
-    classified: none,
-    classification: none,
-    cui: none,
-    wide: false
-) = {
-
-    set text(16pt)
-
-    // Set the classification for the document.
-    //
-    // If there is no classification, but a CUI block exists, then the document
-    // is CUI.
-    //
-    // There should be no CUI without a CUI block, but if the document is
-    // UNCLASSIFIED, then it should be set in `classified.overall`.
-
-    if(classification == none) {
-        if classified != none {
-          classification = classified.overall
-        } else if cui != none {
-          classification = "CUI"
-        }
-    }
-
-    let classcolor = colorForClassification(classification, sci)
-    let overallclasscolor = colorForClassification(classified.overall, sci)
-
-    let header = align(center, text(size: 18pt, fill: classcolor, strong(classification)))
-    let footer = [
-        #h(1fr) #text(size: 18pt, fill: classcolor, strong(classification))
-        #h(1fr) #counter(page).display()
-    ]
-    let paper = "presentation-4-3"
-    if(wide) {
-        let paper = "presentation-16-9"
-    }
-    page(
-        margin: 15%,
-        paper: paper,
-        header: header,
-        footer: footer,
-        align(horizon)[
-          #showTitles(
-            title: title,
-            subtitle: subtitle,
-            version: version,
-            author: author,
-            date: date)
-            #if classification != none {
-                align(center)[
-                    The Overall Classification of this Document is: \
-                    #text(size: 20pt, fill: overallclasscolor, strong(classified.overall))
-                ]
-            }
-            #align(center,drawClassificationBlocks(classified, cui))
-        ]
-    )
-}
-
-#let slide(
-    title: none,
-    classification: "",
-    wide: false,
-    body
-) = {
-    set text(size: 16pt)
-    show link: underline
-
-    let classcolor = colorForClassification(classification, sci)
-
-    let header = align(center, text(size: 18pt, fill: classcolor, strong(classification)))
-    let footer = [
-        #h(1fr) #text(size: 18pt, fill: classcolor, strong(classification))
-        #h(1fr) #counter(page).display()
-    ]
-    let paper = "presentation-4-3"
-    if(wide) {
-        let paper = "presentation-16-9"
-    }
-    page(
-        margin: 15%,
-        paper: paper,
-        header: header,
-        footer: footer)[
-        #if(title != none) { text(24pt)[*#title*] }
-        #body
-    ]
-}
-
-
-#let source_slide(
-    classification: "",
-    wide: false,
-    bib: none
-) = {
-    set text(size: 16pt)
-    show link: underline
-
-    let classcolor = colorForClassification(classification, sci)
-
-    let header = align(center, text(size: 18pt, fill: classcolor, strong(classification)))
-    let footer = [
-        #h(1fr) #text(size: 18pt, fill: classcolor, strong(classification))
-        #h(1fr) #counter(page).display()
-    ]
-    let paper = "presentation-4-3"
-    if(wide) {
-        let paper = "presentation-16-9"
-    }
-    page(
-        margin: 15%,
-        paper: paper,
-        header: header,
-        footer: footer)[
-			#showBibliography(bib)
-		]
 }
