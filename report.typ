@@ -237,10 +237,11 @@
 
   if title_page {
     // The outline and other "front matter" pages should use Roman numerals.
-    let footer = [
-      #h(1fr) #text(fill: classcolor, strong(classification))
-      #h(1fr) #counter(page).display("i")
-    ]
+    let footer = grid(columns: (1fr,auto,1fr),
+      [],
+      align(center, text(fill: classcolor, strong(classification))),
+      align(right, counter(page).display("i"))
+    )
 
     page(paper,
       background: none,
@@ -264,10 +265,11 @@
   }
 
   // Body pages should be numbered with standard Arabic numerals.
-  let footer = [
-    #h(1fr) #text(fill: classcolor, strong(classification))
-    #h(1fr) #counter(page).display("1")
-  ]
+  let footer = grid(columns: (1fr,auto,1fr),
+    [],
+    align(center, text(fill: classcolor, strong(classification))),
+    align(right, counter(page).display("1"))
+  )
 
   set page(
     paper: paper,
