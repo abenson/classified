@@ -34,7 +34,7 @@
   // Required fields:
   //   - by: Person who conducted marking review
   // Optional Fields:
-  //   - sources: Name of SCG used; if multiple, leave blank and
+  //   - source: Name of SCG used; if multiple, leave blank and
   //     include at the end of the document.
   //   - downgradeto: If the document will be downgraded, what class?
   //   - downgradeon: The date downgrade on which the downgrade can happen
