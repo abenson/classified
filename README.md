@@ -1,4 +1,4 @@
-# Templates for Use with Typst
+# A Report template for Use with Typst
 
 SPDX-License Identifier: Unlicense
 
@@ -8,26 +8,16 @@ currently is `float:true`.
 
 ## Status
 
-The goal is to have parity with the old Pandoc templates I had. Currently, I
-have most of the old `work` template implemented, named `report`, but the
-`work-plain` template is fully implemented.  They were combined in a single file
-since they share several parts.
+All of the old templates and plans are being retired. There will be a single
+type called `report`.
 
-- [x] `work` => `work/report`
-- [x] `work-plain => `work/simple`
-- [ ] `mla`
-- [ ] `memo`
-- [ ] `letter`; I may borrow and tweak Typst's `letter` template
+- [x] `work` => `report`
+- [x] `simple` => `report`
 
-I may also adapt some of their other templates to my liking.
+To enable the features of the old long-form template, such as the title page and
+table of contents, pass `title_page: true` to the `report.with()`.
 
-- [ ] `book`
-
-I also intend to make my own presentation/briefing template.
-
-- [ ] `presentation`
-
-## Typst
+## Why Typst?
 
 I used to have a workflow based around [Pandoc](https://pandoc.org/). It allowed
 me to write in Markdown and generate pretty PDFs using Pandoc's [template
@@ -45,24 +35,3 @@ until I found Typst.
 but much smaller and with a newly designed language. Also, it borrows a lot of
 inline formatting from other frameworks, such as `_italics_` and `*bold*`, which
 make it easy to work with quickly.
-
-## Setup
-
-Simply clone this repo:
-
-    $ git clone https://github.com/abenson/typst-templates
-
-and then link to it from your documentation project:
-
-    $ ln -s ~/path/to/typst-templates templates
-
-Once there, you can use the templates in your own documents.
-
-    #import "templates/manuscript.typ": manuscript
-    #show: manuscript.with(
-    <...>
-
-Remember that assets, like the bibliography, logo, and other files, can be
-included using using `/file.ext`; path will be relative to the file being
-compiled. `file.ext`, without the leading `/`, will be relative from this
-directory.

@@ -1,8 +1,8 @@
 [package]
-name = "work"
-version = "0.3.3"
-entrypoint = "work.typ"
+name = "report"
+version = "0.4.0"
+entrypoint = "report.typ"
 authors = "Andrew Benson <abenson+typst@gmail.com>"
 license = "Unlicense"
-description = "Work products"
-repository = "https://github.com/abenson/typst-templates"
+description = "A report formatting with support for markings"
+repository = "https://github.com/abenson/report"
