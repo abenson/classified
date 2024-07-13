@@ -92,9 +92,13 @@
   // Print a bilbiography if given one.
   // This behavior is necessary due to the way typst handles paths.
   // This will likely be updated to use the new path object when added. Issue #971
-  biblio
+  biblio,
+  title_page: false,
 ) = {
   if biblio != none {
+    if title_page {
+      pagebreak()
+    }
     show bibliography: set text(1em)
     show bibliography: set par(first-line-indent: 0em)
     biblio
@@ -291,5 +295,5 @@
 
   body
   
-  showBibliography(bib)
+  showBibliography(bib, title_page: title_page)
 }
