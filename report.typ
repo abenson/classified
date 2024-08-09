@@ -231,7 +231,7 @@
     }
 
     if classification != none {
-      align(center)[The Overall Classification of this Document is]
+      align(center)[This document is]
       align(center, text(fill: classcolor, size: 17pt, strong(classification)))
     }
     drawClassificationBlocks(classified, cui)
