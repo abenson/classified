@@ -51,7 +51,7 @@
   let dcablock = []
   let cuiblock = []
 
-  if classified != none and regex("UNCLASSIFIED|CUI") not in classified.overall {
+  if classified != none and regex("UNCLASSIFIED|CUI|CONTROLLED") not in classified.overall {
     dcablock = [
       #set align(left)
       *Classified By:* #classified.at("by", default: "MISSING!") \
