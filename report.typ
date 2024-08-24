@@ -11,10 +11,10 @@
   if disableColor == false and classification != none {
     if sci {
       classcolor = rgb("#fce83a") // Yellow for any SCI (CLASS//SC,I//ETC)
-    } else if regex("UNCLASSIFIED") in classification {
-       classcolor = rgb("#007a33") // Green for UNCLASSIFIED[//FOUO]
     } else if regex("CUI|CONTROLLED") in classification {
        classcolor = rgb("#502b85") // Purple for C(ontrolled) U(Unclass) I(nfo)
+    } else if regex("UNCLASSIFIED") in classification {
+       classcolor = rgb("#007a33") // Green for UNCLASSIFIED[//FOUO]
     } else if regex("CLASSIFIED") in classification {
        classcolor = rgb("#c1a7e2") // Indetermined classified data, ca.1988
     } else if regex("CONFIDENTIAL") in classification {
