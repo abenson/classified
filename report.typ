@@ -116,7 +116,7 @@
   // A version string if the document may have multiple versions
   version: none,
   // The author of the document
-  author: none,
+  authors: (),
   // A publication date
   date: none
 ) = {
@@ -132,8 +132,8 @@
   if version != none {
     align(center, text(version))
   }
-  if author != none {
-    align(center, author)
+  if authors != () {
+    align(center, authors.join(", "))
   }
   if date != none {
     align(center, date)
@@ -145,7 +145,7 @@
   title_intro: none,
   title: none,
   subtitle: none,
-  author: none,
+  authors: (),
   date: none,
   classified: none,
   cui: none,
@@ -156,8 +156,16 @@
   bib: none,
   paper: "us-letter",
   front: none,
+  keywords: (),
   body
 ) = {
+
+  set document(
+    title: title,
+    author: authors,
+    keywords: keywords,
+  )
+
   set par(justify: true)
   set text(size: 12pt)
   show link: underline
@@ -287,7 +295,7 @@
       title: title,
       subtitle: subtitle,
       version: version,
-      author: author,
+      authors: authors,
       date: date)
     drawClassificationBlocks(classified, cui)
 }
