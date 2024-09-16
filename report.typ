@@ -228,7 +228,7 @@
       title: title,
       subtitle: subtitle,
       version: version,
-      author: author,
+      authors: authors,
       date: date)
 
     // 3in provides a decent logo or a decent size gap
