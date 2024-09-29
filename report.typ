@@ -256,7 +256,8 @@
 
     page(paper,
       background: none,
-      align(center+horizon,"This page intentionally left blank."))
+      align(center+horizon,"This page intentionally left blank.")
+    )
     
     set page(
       paper: paper,
