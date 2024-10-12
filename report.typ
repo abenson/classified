@@ -254,7 +254,7 @@
     let footer = grid(columns: (1fr,auto,1fr),
       [],
       align(center, text(fill: classcolor, strong(classification))),
-      align(right, counter(page).display("i"))
+      align(right, context { counter(page).display("i") })
     )
 
     page(paper,
