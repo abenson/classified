@@ -196,6 +196,9 @@
   }
 
   let classcolor = colorForClassification(classification, sci)
+  if classified != none and classified.at("color", default: none) != none {
+    classcolor = classified.color
+  }
 
   if title_page {
     if border == true or type(border) == color {
