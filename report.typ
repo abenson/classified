@@ -171,10 +171,7 @@
   show link: underline
   set heading(numbering: "1.1.1. ")
 
-  show heading: it => [
-    #set text(12pt, weight: "bold")
-    #block(it)
-  ]
+  show heading: set text(12pt, weight: "bold")
 
   let classification = none
 
