@@ -299,7 +299,7 @@
       authors: authors,
       date: date)
     drawClassificationBlocks(classified, cui)
-}
+  }
 
   body
   
