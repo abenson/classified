@@ -198,6 +198,7 @@
   }
 
   if title_page {
+    set page(footer: none, header: none)
     if border == true or type(border) == color {
       let border_color = classcolor
       if type(border) == color {
@@ -255,6 +256,8 @@
     )
 
     page(paper,
+      footer: none,
+      header: none,
       background: none,
       align(center+horizon,"This page intentionally left blank.")
     )
