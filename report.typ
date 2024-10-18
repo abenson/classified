@@ -49,7 +49,7 @@
   )
 }
 
-// Draw CUI and DCA Blocks, same for both simple and report (sorry, OCAs)
+// Draw CUI and DCA Blocks (sorry, OCAs)
 #let drawClassificationBlocks(
   // Fields for DCA Block
   // Required fields:
