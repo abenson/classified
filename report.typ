@@ -28,6 +28,17 @@
   classcolor
 }
 
+#let classificationWithColor(
+  classification,
+  sci: false
+) = {
+  text(
+    weight: "bold",
+    fill: colorForClassification(classification, sci),
+    classification
+  )
+}
+
 // Draw CUI and DCA Blocks, same for both simple and report (sorry, OCAs)
 #let drawClassificationBlocks(
   // Fields for DCA Block
