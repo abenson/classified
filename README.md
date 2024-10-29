@@ -2,20 +2,15 @@
 
 SPDX-License Identifier: Unlicense
 
-These files are meant to be used with Typst `v0.7.0`.  They can be made to work
-with older versions, though. I believe the only thing I'm using from `v0.7.0`
-currently is `float:true`.
+For `report-v0.5.0`, the minimum Typst version is `v0.12.0`. They can be made to
+work with older versions, though.
 
-## Status
+## Purpose
 
-All of the old templates and plans are being retired. There will be a single
-type called `report`.
-
-- [x] `work` => `report`
-- [x] `simple` => `report`
-
-To enable the features of the old long-form template, such as the title page and
-table of contents, pass `title_page: true` to the `report.with()`.
+The purpose of this package is to provide some presets focused on the
+classification of a report, such as adding banners, DCA and CUI blocks, as well
+as providing a mechanism to colorify the above. It also presets some styling and
+enables some optional features that would be useful in a published report.
 
 ## Why Typst?
 
@@ -35,3 +30,14 @@ until I found Typst.
 but much smaller and with a newly designed language. Also, it borrows a lot of
 inline formatting from other frameworks, such as `_italics_` and `*bold*`, which
 make it easy to work with quickly.
+
+## Old Templates
+
+All of the old templates and plans have been retired. There is a single type
+called `report`.
+
+- [x] `work` => `report`
+- [x] `simple` => `report`
+
+To enable the features of the old long-form template, such as the title page and
+table of contents, pass `title_page: true` to the `report.with()`.
