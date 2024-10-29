@@ -2,9 +2,7 @@
 name = "report"
 version = "0.5.0"
 entrypoint = "report.typ"
-authors = [
-	"Andrew Benson <abenson+typst@gmail.com>",
-]
+authors = ["Andrew Benson <abenson+typst@gmail.com>"]
 license = "Unlicense"
 description = "Report format with support for markings"
 repository = "https://github.com/abenson/report"
