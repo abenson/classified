@@ -149,6 +149,8 @@
   // A publication date
   date: none
 ) = {
+  set par(justify: false)
+  set text(hyphenate: false)
   if title_intro != none {
     align(center, text(14pt, title_intro))
   }
@@ -167,6 +169,8 @@
   if date != none {
     align(center, date)
   }
+  set par(justify: true)
+  set text(hyphenate: true)
 }
 
 // A full report format.
