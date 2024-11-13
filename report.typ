@@ -163,6 +163,9 @@
   if version != none {
     align(center, text(version))
   }
+  if type(authors) == str {
+    authors = (authors,)
+  }
   if authors != () {
     align(center, authors.join(", "))
   }
@@ -212,7 +215,10 @@
   // If there is no classification, but a CUI block exists, then the document is CUI.
   // There should be no CUI without a CUI block, but if the document is UNCLASSIFIED,
   // then it should be set in `classified.overall`.
-  if classified != none {
+  if type(classified) == str {
+    classification = classified
+    classified = (overall: classified)
+  } else if classified != none {
     classification = classified.overall
   } else if cui != none {
     classification = "CUI"
