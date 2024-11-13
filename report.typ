@@ -344,6 +344,8 @@
   }
 
   body
-  
+
+  set par(justify: false)
   showBibliography(bib, title_page: title_page)
+  set par(justify: true)
 }
