@@ -91,10 +91,18 @@
   }
 
   if cui != none {
+    let conby = cui.at("controlledby", default: "MISSING!")
+    if type(conby) == array {
+      conby = conby.join(strong("\nControlled By: "))
+    }
+    let cats = cui.at("categories", default: "MISSING!")
+    if type(cats) == array {
+      cats = cats.join(", ")
+    }
     cuiblock = rect[
       #set align(left)
-      *Controlled By:* #cui.at("controlledby", default: ("MISSING!",)).join(strong("\nControlled By: "))\
-      *Categories:* #cui.at("categories", default: "MISSING!") \
+      *Controlled By:* #conby \
+      *Categories:* #cats \
       *Dissemination:* #cui.at("dissemination", default: "MISSING!") \
       *POC:* #cui.at("poc", default: "MISSING!")
     ]
