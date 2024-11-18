@@ -273,7 +273,7 @@
 
     // 3in provides a decent logo or a decent size gap
     if logo != none {
-      align(center, logo)
+      align(center, scale(factor: 3in, reflow: true, logo))
     } else {
       rect(height: 3in, stroke: none)
     }
