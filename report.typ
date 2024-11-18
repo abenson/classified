@@ -333,6 +333,10 @@
   counter(page).update(1)
 
   if not title_page {
+    // A 1in logo works well for the top left corner.
+    if logo != none {
+      place(top+left, dy: -0.5in, scale(1in, origin: top+left, reflow: true, logo))
+    }
     showTitles(
       title_intro: title_intro,
       title: title,
