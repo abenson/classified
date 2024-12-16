@@ -155,10 +155,10 @@
     align(center, text(14pt, title_intro))
   }
   if title != none {
-    align(center, text(25pt, title))
+    align(center, text(20pt, title))
   }
   if subtitle != none {
-    align(center, text(17pt, subtitle))
+    align(center, text(18pt, subtitle))
   }
   if version != none {
     align(center, text(version))
