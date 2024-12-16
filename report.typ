@@ -273,7 +273,8 @@
 
     // 3in provides a decent logo or a decent size gap
     if logo != none {
-      align(center, scale(factor: 3in, reflow: true, logo))
+      set image(height: 3in)
+      align(center, logo)
     } else {
       rect(height: 3in, stroke: none)
     }
@@ -335,7 +336,8 @@
   if not title_page {
     // A 1in logo works well for the top left corner.
     if logo != none {
-      place(top+left, dy: -0.5in, scale(1in, origin: top+left, reflow: true, logo))
+      set image(height: 1in)
+      place(top+left, dy: -0.5in, logo)
     }
     showTitles(
       title_intro: title_intro,
