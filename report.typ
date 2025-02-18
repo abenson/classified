@@ -128,6 +128,7 @@
     if title_page {
       pagebreak()
     }
+    set bibliography(title: "References", style: "ieee")
     show bibliography: set text(1em)
     show bibliography: set par(first-line-indent: 0em)
     biblio
