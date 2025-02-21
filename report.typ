@@ -225,8 +225,12 @@
     classification = "CUI"
   }
 
+  let comment = none
   let sci = false
   if classified != none {
+    if ("comment" in classified) {
+      comment = [ \ ] + classified.comment
+    }
     if ("sci" in classified) {
       sci = classified.sci
     }
@@ -286,7 +290,7 @@
     drawClassificationBlocks(classified, cui)
   }
 
-  let header = align(center, text(fill: classcolor, strong(classification)))
+  let header = align(center, text(fill: classcolor, strong(classification)) + comment)
 
   if title_page {
     // The outline and other "front matter" pages should use Roman numerals.
