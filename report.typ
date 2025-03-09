@@ -193,6 +193,7 @@
   bib: none,
   paper: "us-letter",
   front: none,
+  abstract: none,
   keywords: (),
   body
 ) = {
@@ -287,6 +288,11 @@
     if classification != none {
       align(center, text(fill: classcolor, size: 17pt, strong(classification)))
     }
+
+    if(abstract != none) {
+      abstract
+    }
+
     drawClassificationBlocks(classified, cui)
   }
 
@@ -351,6 +357,11 @@
       version: version,
       authors: authors,
       date: date)
+
+    if(abstract != none) {
+      abstract
+    }
+
     drawClassificationBlocks(classified, cui)
   }
 
