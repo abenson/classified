@@ -324,8 +324,8 @@
 
     front
 
-    outline()
-
+    outline(target: heading.where(supplement: [Section]))
+    outline(target: heading.where(supplement: [Appendix]), title: none, depth: 1)
     pagebreak(weak: true, to:"odd")
 
   }
@@ -370,4 +370,22 @@
   set par(justify: false)
   showBibliography(bib, title_page: title_page)
   set par(justify: true)
+}
+
+#let appendix(body) = {
+  set heading(
+    numbering: (first, ..other) =>
+      if other.pos().len() == 0 {
+        return "Appendix " + numbering("A", first) + ":"
+      } else {
+        numbering("1.", ..other)
+      },
+    supplement: "Appendix"
+  )
+  show heading.where(level: 1): it => {
+    pagebreak(weak:true)
+    it
+  }
+  counter(heading).update(0)
+  body
 }
