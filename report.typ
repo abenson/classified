@@ -4,8 +4,8 @@
 //Pick a color based on the classification string
 #let colorForClassification(
   classification,
-  sci,
-  disableColor: false
+  sci: false,
+  disableColor: false,
 ) = {
   let classcolor = black
   if disableColor == false and classification != none {
@@ -44,7 +44,7 @@
   }
   text(
     weight: "bold",
-    fill: colorForClassification(realclass, sci),
+    fill: colorForClassification(realclass, sci: sci),
     classification
   )
 }
@@ -148,7 +148,7 @@
   // The author of the document
   authors: (),
   // A publication date
-  date: none
+  date: none,
 ) = {
   set par(justify: false)
   set text(hyphenate: false)
@@ -237,7 +237,7 @@
     }
   }
 
-  let classcolor = colorForClassification(classification, sci)
+  let classcolor = colorForClassification(classification, sci: sci)
   if classified != none and classified.at("color", default: none) != none {
     classcolor = classified.color
   }
