@@ -258,11 +258,13 @@
             stroke: 6pt+border_color
         )
       } else {
-            border = rect(
+        border = layout(size => {
+          rect(
             width: 100%-1in,
             height: 100%-1in,
-            stroke: 0.5in+border_color
-        )
+            stroke: (size.width * 5%) + border_color
+          )
+        })
       }
     } else {
       border = none
