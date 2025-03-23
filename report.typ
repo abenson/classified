@@ -75,6 +75,7 @@
   if classified != none and regex("SECRET|CONFIDENTIAL|\bCLASSIFIED") in classified.overall {
     dcablock = [
       #set align(left)
+      #set par(justify:false)
       *Classified By:* #classified.at("by", default: "MISSING!") \
       *Derived From:* #classified.at("source", default: "Multiple Sources") \
       #if classified.at("downgradeto", default: []) != [] {
@@ -100,6 +101,7 @@
       cats = cats.join(", ")
     }
     cuiblock = rect[
+      #set par(justify:false)
       #set align(left)
       *Controlled By:* #conby \
       *Categories:* #cats \
