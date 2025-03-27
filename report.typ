@@ -34,17 +34,17 @@
 ) = {
   text(
     weight: "bold",
-    fill: colorForClassification(realclass, sci: sci),
+    fill: colorForClassification(classification, sci: sci),
     classification
   )
 }
 
-#let classifiedTable(columns: none, caption: none, banner: none, header: none, ..fields) = {
+#let classifiedTable(columns: none, caption: none, banner: none, sci: false, header: none, ..fields) = {
   let cols = columns
   if(type(cols) == array) {
     cols = cols.len()
   }
-  banner = table.cell(colspan: cols, classificationWithColor(banner))
+  banner = table.cell(colspan: cols, classificationWithColor(banner, sci: sci))
   if(header != none) {
     header = header.map(
       it => {
@@ -66,10 +66,10 @@
   )
 }
 
-#let classifiedFigure(caption: none, banner: none, content) = {
+#let classifiedFigure(caption: none, banner: none, sci: false, content) = {
   figure(caption: caption, kind: image,
     table(columns: 1fr, stroke: none,
-      table.cell(stroke: (bottom: none), classificationWithColor(banner)),
+      table.cell(stroke: (bottom: none), classificationWithColor(banner, sci: sci)),
       table.cell(stroke: (top: none, bottom: none), content),
       table.cell(stroke: (top: none), classificationWithColor(banner)),
     )
