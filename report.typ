@@ -28,6 +28,7 @@
   classcolor
 }
 
+// Like the above, but return the content with the color applied.
 #let classificationWithColor(
   classification,
   sci: false
@@ -39,6 +40,7 @@
   )
 }
 
+// Wrapper for tables. Adds a banner and formats the headers.
 #let classifiedTable(columns: none, caption: none, banner: none, sci: false, header: none, ..fields) = {
   let cols = columns
   if(type(cols) == array) {
@@ -66,6 +68,7 @@
   )
 }
 
+// Wrapper for figures to add a banner.
 #let classifiedFigure(caption: none, banner: none, sci: false, content) = {
   figure(caption: caption, kind: image,
     table(columns: 1fr, stroke: none,
