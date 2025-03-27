@@ -49,6 +49,36 @@
   )
 }
 
+#let classifiedTable(columns: none, caption: none, banner: none, header: none, ..fields) = {
+  let cols = columns
+  if(type(cols) == array) {
+    cols = cols.len()
+  }
+  banner = table.cell(colspan: cols, classificationWithColor(banner))
+  header = table.header(
+    banner,
+    ..header,
+  )
+  figure(caption: caption,
+    table(
+      columns: columns,
+      header,
+      ..fields,
+      banner
+    )
+  )
+}
+
+#let classifiedFigure(caption: none, banner: none, content) = {
+  figure(caption: caption, kind: image,
+    table(columns: 1fr, stroke: none,
+      table.cell(stroke: (bottom: none), classificationWithColor(banner)),
+      table.cell(stroke: (top: none, bottom: none), content),
+      table.cell(stroke: (top: none), classificationWithColor(banner)),
+    )
+  )
+}
+
 // Draw CUI and DCA Blocks (sorry, OCAs)
 #let drawClassificationBlocks(
   // Fields for DCA Block
