@@ -55,6 +55,13 @@
     cols = cols.len()
   }
   banner = table.cell(colspan: cols, classificationWithColor(banner))
+  if(header != none) {
+    header = header.map(
+      it => {
+        table.cell(fill: color.blue, text(weight: "bold", fill: white, it))
+      }
+    )
+  }
   header = table.header(
     banner,
     ..header,
