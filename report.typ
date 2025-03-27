@@ -32,16 +32,6 @@
   classification,
   sci: false
 ) = {
-  let realclass = classification
-  if regex("TS") in classification {
-    realclass = "TOP SECRET"
-  } else if regex("\bS") in classification {
-    realclass = "SECRET"
-  } else if regex("\bU\b") in classification {
-    realclass = "UNCLASSIFIED"
-  } else if regex("\bC\b") in classification {
-    realclass = "CONFIDENTIAL"
-  }
   text(
     weight: "bold",
     fill: colorForClassification(realclass, sci: sci),
