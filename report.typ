@@ -50,7 +50,7 @@
   if(header != none) {
     header = header.map(
       it => {
-        table.cell(fill: color.blue, text(weight: "bold", fill: white, it))
+        table.cell(fill: rgb("#1f3864"), text(weight: "bold", fill: white, it))
       }
     )
   }
@@ -148,7 +148,6 @@
 }
 
 // Show the bibliography, if one is attached.
-
 #let showBibliography(
   // Print a bilbiography if given one.
   // This behavior is necessary due to the way typst handles paths.
@@ -157,13 +156,25 @@
   title_page: false,
 ) = {
   if biblio != none {
-    if title_page {
-      pagebreak()
-    }
     set bibliography(title: "References", style: "ieee")
     show bibliography: set text(1em)
     show bibliography: set par(first-line-indent: 0em)
-    biblio
+    if title_page {
+      show bibliography: set heading(
+        numbering: (first, ..other) =>
+          if other.pos().len() == 0 {
+            return "Appendix " + numbering("A", first) + ":"
+          } else {
+            numbering("1.", ..other)
+          },
+        supplement: "Appendix"
+      )
+      pagebreak()
+      biblio
+    } else {
+      show bibliography: set heading(numbering: "1.")
+      biblio
+    }
   }
 }
 
