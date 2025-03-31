@@ -114,13 +114,13 @@
       } else {
         [*Derived From:* #classified.at("source", default: "Multiple Sources") \ ]
       }
-      #if classified.at("downgradeto", default: []) != [] {
+      #if classified.at("downgradeto", default: none) != none {
          [*Downgrade To:* #classified.downgradeto \ ]
       }
-      #if classified.at("downgradeon", default: []) != [] {
+      #if classified.at("downgradeon", default: none) != none {
          [*Downgrade On:* #classified.downgradeon \ ]
       }
-      #if classified.at("until", default: []) != []{
+      #if classified.at("until", default: none) != none {
          [*Declassify On:* #classified.until \ ]
       }
     ]
