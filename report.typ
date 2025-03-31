@@ -213,9 +213,6 @@
   if version != none {
     align(center, text(version))
   }
-  if type(authors) == str {
-    authors = (authors,)
-  }
   if authors != () {
     align(center, authors.join(", "))
   }
@@ -273,6 +270,14 @@
     classification = classified.overall
   } else if cui != none {
     classification = "CUI"
+  }
+
+  if type(authors) == str {
+    authors = (authors,)
+  }
+
+  if classified != none and classified.at("by", default: none) == none and authors != () {
+    classified.insert("by", authors.at(0))
   }
 
   let comment = none
