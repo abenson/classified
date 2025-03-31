@@ -79,17 +79,19 @@
   )
 }
 
-// Draw CUI and DCA Blocks (sorry, OCAs)
+// Draw CUI and DCA/OCA Blocks
 #let drawClassificationBlocks(
   // Fields for DCA Block
   // Required fields:
   //   - by: Person who conducted marking review
   // Optional Fields:
-  //   - source: Name of SCG used; if multiple, leave blank and
+  //   - source: (Derivative classification) Name of SCG used; if multiple, leave blank and
   //     include at the end of the document.
+  //      OR
+  //   - reason: (Original classification) From 1.4, E.O. 13526
   //   - downgradeto: If the document will be downgraded, what class?
   //   - downgradeon: The date downgrade on which the downgrade can happen
-  //   - until: Document will be declassified on this date, i.e. $date+25y, $date+75y
+  //   - until: Document will be declassified on this date or condition
   classified,
   // Fields for CUI Block
   // Required Fields:
@@ -107,7 +109,11 @@
       #set align(left)
       #set par(justify:false)
       *Classified By:* #classified.at("by", default: "MISSING!") \
-      *Derived From:* #classified.at("source", default: "Multiple Sources") \
+      #if classified.at("reason", default: none) != none {
+        [*Reason:* #classified.at("reason") \ ]
+      } else {
+        [*Derived From:* #classified.at("source", default: "Multiple Sources") \ ]
+      }
       #if classified.at("downgradeto", default: []) != [] {
          [*Downgrade To:* #classified.downgradeto \ ]
       }
