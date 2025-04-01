@@ -244,8 +244,13 @@
   body
 ) = {
 
+  let meta_title = title
+
+  if title_intro != none { meta_title = title_intro + " - " + meta_title }
+  if subtitle != none { meta_title = meta_title + " - " + subtitle }
+
   set document(
-    title: title,
+    title: meta_title,
     author: authors,
     keywords: keywords,
   )
