@@ -257,6 +257,9 @@
 
   show heading: set text(12pt, weight: "bold")
 
+  set enum(indent: 0.25in)
+  set list(indent: 0.25in)
+
   let classification = none
 
   // Set the classification for the document.
