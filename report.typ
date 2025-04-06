@@ -258,7 +258,6 @@
   set par(justify: true)
   set text(size: 12pt)
   show link: underline
-  set heading(numbering: "1.1.1. ")
 
   show heading: set text(12pt, weight: "bold")
 
@@ -396,6 +395,8 @@
     pagebreak(weak: true, to:"odd")
 
   }
+
+  set heading(numbering: "1.1.1. ")
 
   // Body pages should be numbered with standard Arabic numerals.
   let footer = grid(columns: (1fr,auto,1fr),
