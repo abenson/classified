@@ -384,10 +384,13 @@
       background: none
     )
     set align(top)
+    set page(numbering: "i")
     counter(page).update(1)
 
     front
 
+    pagebreak(to:"odd", weak:true)
+    counter(heading).update(0)
     outline(target: heading.where(supplement: [Section]))
     outline(target: heading.where(supplement: [Appendix]), title: none, depth: 1)
     pagebreak(weak: true, to:"odd")
