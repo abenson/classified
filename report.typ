@@ -222,7 +222,7 @@
     align(center, authors.join(", "))
   }
   if date != none {
-    align(center, date)
+    align(center, text(16pt, date))
   }
   set par(justify: true)
   set text(hyphenate: true)
