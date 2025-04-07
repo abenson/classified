@@ -192,6 +192,8 @@
   title: none,
   // A subtitle, if needed: "... or, How I Spent My Summer Vacation"
   subtitle: none,
+  // The location...
+  location: none,
   // A version string if the document may have multiple versions
   version: none,
   // The author of the document
@@ -208,7 +210,10 @@
     align(center, text(20pt, title))
   }
   if subtitle != none {
-    align(center, text(18pt, subtitle))
+    align(center, text(19pt, subtitle))
+  }
+  if location != none {
+    align(center, text(18pt, location))
   }
   if version != none {
     align(center, text(version))
@@ -228,6 +233,7 @@
   title_intro: none,
   title: none,
   subtitle: none,
+  location: none,
   authors: (),
   date: none,
   classified: none,
@@ -336,6 +342,7 @@
       title_intro: title_intro,
       title: title,
       subtitle: subtitle,
+      location: location,
       version: version,
       authors: authors,
       date: date)
