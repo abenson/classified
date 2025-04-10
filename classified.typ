@@ -2,7 +2,7 @@
 // SPDX-License Identifier: Unlicense
 
 //Pick a color based on the classification string
-#let colorForClassification(
+#let Color(
   classification,
   sci: false,
   disableColor: false,
@@ -29,24 +29,24 @@
 }
 
 // Like the above, but return the content with the color applied.
-#let classificationWithColor(
+#let Colorize(
   classification,
   sci: false
 ) = {
   text(
     weight: "bold",
-    fill: colorForClassification(classification, sci: sci),
+    fill: Color(classification, sci: sci),
     classification
   )
 }
 
 // Wrapper for tables. Adds a banner and formats the headers.
-#let classifiedTable(columns: none, caption: none, banner: none, sci: false, header: none, ..fields) = {
+#let Table(columns: none, caption: none, banner: none, sci: false, header: none, ..fields) = {
   let cols = columns
   if(type(cols) == array) {
     cols = cols.len()
   }
-  banner = table.cell(colspan: cols, classificationWithColor(banner, sci: sci))
+  banner = table.cell(colspan: cols, Colorize(banner, sci: sci))
   if(header != none) {
     header = header.map(
       it => {
@@ -69,7 +69,7 @@
 }
 
 // Wrapper for figures to add a banner.
-#let classifiedFigure(caption: none, banner: none, sci: false, content) = {
+#let Figure(caption: none, banner: none, sci: false, content) = {
   figure(caption: caption, kind: image,
     table(columns: 1fr, stroke: 1pt,
       table.cell(stroke: (bottom: none), classificationWithColor(banner, sci: sci)),
@@ -80,7 +80,7 @@
 }
 
 // Draw CUI and DCA/OCA Blocks
-#let drawClassificationBlocks(
+#let AuthorityBlock(
   // Fields for DCA Block
   // Required fields:
   //   - by: Person who conducted marking review
@@ -93,19 +93,11 @@
   //   - downgradeon: The date downgrade on which the downgrade can happen
   //   - until: Document will be declassified on this date or condition
   classified,
-  // Fields for CUI Block
-  // Required Fields:
-  //   - controlledby: Array of controllers, ("Division 2", "Office 3")
-  //   - categories: Categories ("OPSEC, PRVCY")
-  //   - dissemination: Approved dissemination list ("FEDCON")
-  //   - poc: POC Name/Contact ("Mr. John Smith, (555) 867-5309")
-  cui
 ) = {
-  let dcablock = []
-  let cuiblock = []
+  let dcablock = none
 
   if classified != none and regex("SECRET|CONFIDENTIAL|\bCLASSIFIED") in classified.overall {
-    dcablock = [
+    dcablock = rect[
       #set align(left)
       #set par(justify:false)
       *Classified By:* #classified.at("by", default: "MISSING!") \
@@ -124,9 +116,20 @@
          [*Declassify On:* #classified.until \ ]
       }
     ]
-    dcablock = rect(dcablock)
   }
+  dcablock
+}
 
+#let CUIDesignatorBlock(
+  // Fields for CUI Block
+  // Required Fields:
+  //   - controlledby: Array of controllers, ("Division 2", "Office 3")
+  //   - categories: Categories ("OPSEC, PRVCY")
+  //   - dissemination: Approved dissemination list ("FEDCON")
+  //   - poc: POC Name/Contact ("Mr. John Smith, (555) 867-5309")
+  cui,
+) = {
+  let cuiblock = none
   if cui != none {
     let conby = cui.at("controlledby", default: "MISSING!")
     if type(conby) == array {
@@ -145,16 +148,11 @@
       *POC:* #cui.at("poc", default: "MISSING!")
     ]
   }
-  place(bottom,  float: true,
-    grid( columns: ( 1fr, 1fr ),
-      dcablock,
-      align(right,cuiblock)
-    )
-  )
+  cuiblock
 }
 
 // Show the bibliography, if one is attached.
-#let showBibliography(
+#let Bibliography(
   // Print a bilbiography if given one.
   // This behavior is necessary due to the way typst handles paths.
   // This will likely be updated to use the new path object when added. Issue #971
@@ -185,7 +183,7 @@
 }
 
 // Draw the titles on the page. Only used in report?
-#let showTitles(
+#let Titles(
   // Introduction for the title, i.e. "Trip Report \ for"
   title_intro: none,
   // The actual title: "Operation Drunken Gambler"
@@ -207,10 +205,10 @@
     align(center, text(14pt, title_intro))
   }
   if title != none {
-    align(center, text(20pt, title))
+    align(center, text(20pt, strong(title)))
   }
   if subtitle != none {
-    align(center, text(19pt, subtitle))
+    align(center, text(19pt, strong(subtitle)))
   }
   if location != none {
     align(center, text(18pt, location))
@@ -229,7 +227,7 @@
 }
 
 // A full report format.
-#let report(
+#let Report(
   title_intro: none,
   title: none,
   subtitle: none,
@@ -304,11 +302,10 @@
     }
   }
 
-  let classcolor = colorForClassification(classification, sci: sci)
+  let classcolor = Color(classification, sci: sci)
   if classified != none and classified.at("color", default: none) != none {
     classcolor = classified.color
   }
-
   if title_page {
     set page(footer: none, header: none)
     if border == true or type(border) == color {
@@ -338,7 +335,7 @@
     set page(paper: paper, background: border)
     set align(horizon)
 
-    showTitles(
+    Titles(
       title_intro: title_intro,
       title: title,
       subtitle: subtitle,
@@ -363,7 +360,12 @@
       abstract
     }
 
-    drawClassificationBlocks(classified, cui)
+    place(bottom, float: true,
+      grid(columns: (1fr,)*2,
+       AuthorityBlock(classified),
+       align(right,CUIDesignatorBlock(cui))
+      )
+    )
   }
 
   let header = align(center, text(fill: classcolor, strong(classification)) + comment)
@@ -425,7 +427,7 @@
       set image(height: 1in)
       place(top+left, dy: -0.5in, logo)
     }
-    showTitles(
+    Titles(
       title_intro: title_intro,
       title: title,
       subtitle: subtitle,
@@ -437,17 +439,26 @@
       abstract
     }
 
-    drawClassificationBlocks(classified, cui)
+    place(bottom, float: true,
+      grid(columns: (1fr,)*2,
+       AuthorityBlock(classified),
+       align(right,CUIDesignatorBlock(cui))
+      )
+    )
   }
 
   body
 
   set par(justify: false)
-  showBibliography(bib, title_page: title_page)
+  Bibliography(bib, title_page: title_page)
   set par(justify: true)
 }
 
-#let appendix(body) = {
+// The appendixes are for information that does not belong in the main document.
+// Do not include other documents here, they should be included as attachments
+// or enclosures to the document.
+
+#let Appendix(body) = {
   set heading(
     numbering: (first, ..other) =>
       if other.pos().len() == 0 {
