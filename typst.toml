@@ -1,7 +1,7 @@
 [package]
-name = "report"
-version = "0.6.0"
-entrypoint = "report.typ"
+name = "classified"
+version = "0.7.0"
+entrypoint = "classified.typ"
 authors = ["Andrew Benson <abenson+typst@gmail.com>"]
 license = "Unlicense"
 description = "Report format with support for markings"
