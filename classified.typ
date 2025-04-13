@@ -72,9 +72,9 @@
 #let Figure(caption: none, banner: none, sci: false, content) = {
   figure(caption: caption, kind: image,
     table(columns: 1fr, stroke: 1pt,
-      table.cell(stroke: (bottom: none), classificationWithColor(banner, sci: sci)),
+      table.cell(stroke: (bottom: none), Colorize(banner, sci: sci)),
       table.cell(stroke: (top: none, bottom: none), content),
-      table.cell(stroke: (top: none), classificationWithColor(banner)),
+      table.cell(stroke: (top: none), Colorize(banner)),
     )
   )
 }
