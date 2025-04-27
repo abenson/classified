@@ -368,14 +368,14 @@
     )
   }
 
-  let header = align(center, text(fill: classcolor, strong(classification)) + comment)
+  let header = align(center, text(size: 12pt, fill: classcolor, strong(classification)) + comment)
 
   if title_page {
     // The outline and other "front matter" pages should use Roman numerals.
     let footer = grid(columns: (1fr,auto,1fr),
       [],
-      align(center, text(fill: classcolor, strong(classification))),
-      align(right, context { counter(page).display("i") })
+      align(center, text(size: 12pt, fill: classcolor, strong(classification))),
+      align(right, context { text(size: 12pt, counter(page).display("i")) })
     )
 
     page(paper,
@@ -410,8 +410,8 @@
   // Body pages should be numbered with standard Arabic numerals.
   let footer = grid(columns: (1fr,auto,1fr),
     [],
-    align(center, text(fill: classcolor, strong(classification))),
-    align(right, context { counter(page).display("1") })
+    align(center, text(size: 12pt, fill: classcolor, strong(classification))),
+    align(right, context { text(size: 12pt, counter(page).display("1")) })
   )
 
   set page(
