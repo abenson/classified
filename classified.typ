@@ -345,11 +345,18 @@
       date: date)
 
     // 3in provides a decent logo or a decent size gap
-    if logo != none {
+    {
       set image(height: 3in)
-      align(center, logo)
-    } else {
-      rect(height: 3in, stroke: none)
+      set align(center)
+      if type(logo) == content {
+        logo
+      } else if type(logo) == array {
+        grid(columns: (1fr,)*logo.len(), ..logo.flatten())
+      } else if type(logo) == dictionary {
+        grid(columns: (1fr,)*2, logo.left, logo.right)
+      } else {
+        rect(height: 3in, stroke: none)
+      }
     }
 
     if classification != none {
@@ -423,9 +430,14 @@
 
   if not title_page {
     // A 1in logo works well for the top left corner.
-    if logo != none {
+    {
       set image(height: 1in)
-      place(top+left, dy: -0.5in, logo)
+      if type(logo) == content {
+        place(top+left, dy: -0.5in, logo)
+      } else if type(logo) == dictionary {
+        place(top+left, dy: -0.5in, logo.at("left", default: none))
+        place(top+right, dy: -0.5in, logo.at("right", default: none))
+      }
     }
     Titles(
       title_intro: title_intro,
