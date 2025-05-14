@@ -347,6 +347,7 @@
     // 3in provides a decent logo or a decent size gap
     // If we have more than one logo, resize them by y-0.25in each, then
     // wrap with a rect to preserve the 3in height
+    rect(height: 3in, stroke: none,
     {
       set align(center)
       if type(logo) == content {
@@ -354,17 +355,13 @@
         logo
       } else if type(logo) == array {
         set image(height: 3in - (0.25in * logo.len()))
-        rect(height: 3in, stroke: none,
-          grid(columns: (1fr,)*logo.len(), ..logo.flatten()))
+        grid(columns: (1fr,)*logo.len(), ..logo.flatten())
       } else if type(logo) == dictionary {
         // Keeping with the array of 2 logos, height is 3in-(0.25in*2)
         set image(height: 2.5in, fit: "contain")
-        rect(height: 3in, stroke: none,
-          grid(columns: (1fr,)*2, logo.left, logo.right))
-      } else {
-        rect(height: 3in, stroke: none)
+        grid(columns: (1fr,)*2, logo.left, logo.right)
       }
-    }
+    })
 
     if classification != none {
       align(center, text(fill: classcolor, size: 17pt, strong(classification)))
