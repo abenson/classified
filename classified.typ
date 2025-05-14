@@ -441,6 +441,13 @@
       set image(height: 1in)
       if type(logo) == content {
         place(top+left, dy: -0.5in, logo)
+      } else if type(logo) == array {
+        if logo.len() > 0 {
+          place(top+left, dy: -0.5in, logo.at(0, default: none))
+        }
+        if logo.len() > 1 {
+          place(top+right, dy: -0.5in, logo.at(1, default: none))
+        }
       } else if type(logo) == dictionary {
         place(top+left, dy: -0.5in, logo.at("left", default: none))
         place(top+right, dy: -0.5in, logo.at("right", default: none))
