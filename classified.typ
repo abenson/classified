@@ -497,3 +497,152 @@
   counter(heading).update(0)
   body
 }
+
+// A brief
+#let Brief(
+  title_intro: none,
+  title: none,
+  subtitle: none,
+  location: none,
+  authors: (),
+  date: none,
+  classified: none,
+  cui: none,
+  version: none,
+  logo: none,
+  border: true,
+  bib: none,
+  wide: true,
+  keywords: (),
+  body
+) = {
+
+  let meta_title = title
+
+  if title_intro != none { meta_title = title_intro + " - " + meta_title }
+  if subtitle != none { meta_title = meta_title + " - " + subtitle }
+
+  set document(
+    title: meta_title,
+    author: authors,
+    keywords: keywords,
+  )
+
+  set par(justify: true)
+  set text(size: 12pt)
+
+  show heading: set text(12pt, weight: "bold")
+
+  set enum(indent: 0.25in)
+  set list(indent: 0.25in)
+
+  let classification = none
+
+  // Set the classification for the document.
+  // If there is no classification, but a CUI block exists, then the document is CUI.
+  // There should be no CUI without a CUI block, but if the document is UNCLASSIFIED,
+  // then it should be set in `classified.overall`.
+  if type(classified) == str {
+    classification = classified
+    classified = (overall: classified)
+  } else if classified != none {
+    classification = classified.overall
+  } else if cui != none {
+    classification = "CUI"
+  }
+
+  if type(authors) == str {
+    authors = (authors,)
+  }
+
+  if classified != none and classified.at("by", default: none) == none and authors != () {
+    classified.insert("by", authors.at(0))
+  }
+
+  let comment = none
+  let sci = false
+  if classified != none {
+    if ("comment" in classified) {
+      comment = [ \ ] + classified.comment
+    }
+    if ("sci" in classified) {
+      sci = classified.sci
+    }
+  }
+
+  let classcolor = Color(classification, sci: sci)
+  if classified != none and classified.at("color", default: none) != none {
+    classcolor = classified.color
+  }
+
+  let paper = "presentation-4-3"
+  if(wide) {
+    paper = "presentation-16-9"
+  }
+  set page(
+    paper: paper,
+    footer: align(right, context { counter(page).display("1") })
+  )
+
+
+  Titles(
+    title_intro: title_intro,
+    title: title,
+    subtitle: subtitle,
+    location: location,
+    version: version,
+    authors: authors,
+    date: date)
+
+  // 3in provides a decent logo or a decent size gap
+  if logo != none {
+    set image(height: 33%)
+    align(center, logo)
+  } else {
+    rect(height: 25%, stroke: none)
+  }
+
+  if classification != none {
+    align(center,
+      [Overall classification \ ] +
+      text(fill: classcolor, size: 17pt, strong(classification)) +
+      [ \ ] +
+      comment)
+  }
+
+  place(bottom+left, AuthorityBlock(classified))
+  place(bottom+right, CUIDesignatorBlock(cui))
+
+  set text(size: 18pt)
+
+  pagebreak()
+
+  show outline.entry: it => link(
+    it.element.location(),
+    it.indented(it.prefix(), it.body())
+  )
+
+  outline(title: none)
+
+  show link: underline
+  pagebreak()
+
+  body
+}
+
+#let Slide(
+  title: none,
+  banner: none,
+) = {
+  if banner != none {
+    banner = Colorize(banner)
+  }
+  let header = align(center, banner)
+  let footer = grid(columns: (1fr, auto, 1fr),
+    [],
+    align(center, banner),
+    align(right, context { counter(page).display("1")})
+  )
+  set page(header: header, footer: footer)
+  heading(level: 1, title)
+}
