@@ -347,8 +347,7 @@
     // 3in provides a decent logo or a decent size gap
     // If we have more than one logo, resize them by y-0.25in each, then
     // wrap with a rect to preserve the 3in height
-    rect(height: 3in, stroke: none,
-    {
+    rect(height: 3in, width: 100%, stroke: none, {
       set align(center)
       if type(logo) == content {
         set image(height: 3in, fit: "contain")
