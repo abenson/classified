@@ -226,6 +226,25 @@
   set text(hyphenate: true)
 }
 
+#let Logos(logo, height: 3in, width: 100%) = {
+    // 3in provides a decent logo or a decent size gap
+    // If we have more than one logo, resize them by y-0.25in each, then
+    // wrap with a rect to preserve the 3in height
+    align(center, rect(height: height, width: width, stroke: none, {
+      if type(logo) == content {
+        set image(height: height, fit: "contain")
+        logo
+      } else if type(logo) == array {
+        set image(height: height - (0.25in * logo.len()))
+        grid(columns: (1fr,)*logo.len(), ..logo.flatten())
+      } else if type(logo) == dictionary {
+        // Keeping with the array of 2 logos, height is 3in-(0.25in*2)
+        set image(height: (height - 0.25in*2), fit: "contain")
+        grid(columns: (1fr,)*2, logo.left, logo.right)
+      }
+    }))
+}
+
 // A full report format.
 #let Report(
   title_intro: none,
@@ -344,23 +363,7 @@
       authors: authors,
       date: date)
 
-    // 3in provides a decent logo or a decent size gap
-    // If we have more than one logo, resize them by y-0.25in each, then
-    // wrap with a rect to preserve the 3in height
-    rect(height: 3in, width: 100%, stroke: none, {
-      set align(center)
-      if type(logo) == content {
-        set image(height: 3in, fit: "contain")
-        logo
-      } else if type(logo) == array {
-        set image(height: 3in - (0.25in * logo.len()))
-        grid(columns: (1fr,)*logo.len(), ..logo.flatten())
-      } else if type(logo) == dictionary {
-        // Keeping with the array of 2 logos, height is 3in-(0.25in*2)
-        set image(height: 2.5in, fit: "contain")
-        grid(columns: (1fr,)*2, logo.left, logo.right)
-      }
-    })
+    Logos(logo)
 
     if classification != none {
       align(center, text(fill: classcolor, size: 17pt, strong(classification)))
@@ -495,5 +498,167 @@
     it
   }
   counter(heading).update(0)
+  body
+}
+
+// A brief
+
+#let Slide(
+  title: none,
+  banner: none,
+  outlined: true,
+) = {
+  pagebreak()
+  if banner != none {
+    banner = text(14pt, Colorize(banner))
+  }
+  place(top+center, dy: -0.5in, banner)
+  place(bottom+center, dy: 0.5in, banner)
+  align(center, heading(level: 1, title, outlined: outlined))
+  line(length: 100%, stroke: 6pt+gradient.linear(color.blue, color.black))
+}
+
+#let Brief(
+  title_intro: none,
+  title: none,
+  subtitle: none,
+  location: none,
+  authors: (),
+  date: none,
+  classified: none,
+  cui: none,
+  version: none,
+  logo: none,
+  border: true,
+  bib: none,
+  wide: true,
+  keywords: (),
+  body
+) = {
+
+  let meta_title = title
+
+  if title_intro != none { meta_title = title_intro + " - " + meta_title }
+  if subtitle != none { meta_title = meta_title + " - " + subtitle }
+
+  set document(
+    title: meta_title,
+    author: authors,
+    keywords: keywords,
+  )
+
+  set par(justify: true)
+
+  show heading: set text(32pt, weight: "bold")
+
+  set enum(indent: 0.25in)
+  set list(indent: 0.25in)
+
+  let classification = none
+
+  // Set the classification for the document.
+  // If there is no classification, but a CUI block exists, then the document is CUI.
+  // There should be no CUI without a CUI block, but if the document is UNCLASSIFIED,
+  // then it should be set in `classified.overall`.
+  if type(classified) == str {
+    classification = classified
+    classified = (overall: classified)
+  } else if classified != none {
+    classification = classified.overall
+  } else if cui != none {
+    classification = "CUI"
+  }
+
+  if type(authors) == str {
+    authors = (authors,)
+  }
+
+  if classified != none and classified.at("by", default: none) == none and authors != () {
+    classified.insert("by", authors.at(0))
+  }
+
+  let comment = none
+  let sci = false
+  if classified != none {
+    if ("comment" in classified) {
+      comment = [ \ ] + classified.comment
+    }
+    if ("sci" in classified) {
+      sci = classified.sci
+    }
+  }
+
+  let classcolor = Color(classification, sci: sci)
+  if classified != none and classified.at("color", default: none) != none {
+    classcolor = classified.color
+  }
+
+  let paper = "presentation-4-3"
+  if(wide) {
+    paper = "presentation-16-9"
+  }
+  set page(
+    paper: paper,
+  )
+
+  if classified.at("title", default: none) != none {
+    let banner = Colorize(classified.title)
+    place(top, dy: -0.5in, rect(width: 100%, stroke: none, align(center, banner)))
+    place(bottom, dy: 0.5in, rect(width: 100%, stroke: none, align(center, banner)))
+  }
+
+  Titles(
+    title_intro: title_intro,
+    title: title,
+    subtitle: subtitle,
+    location: location,
+    version: version,
+    authors: authors,
+    date: date)
+
+  Logos(logo, height: 2in, width: 50%)
+
+  if classification != none {
+    align(center,
+      [Overall Brief Classification is:\ ] +
+      text(fill: classcolor, size: 17pt, strong(classification)) +
+      [ \ ] +
+      comment)
+  }
+
+  place(bottom+left, AuthorityBlock(classified))
+  place(bottom+right, CUIDesignatorBlock(cui))
+
+  set text(size: 22pt)
+
+  let header = {
+    set image(height: 1in)
+    if type(logo) == content {
+      place(top+left, dy: 0.25in, logo)
+    } else if type(logo) == array {
+      place(top+left,  dy: 0.25in, logo.at(0, default: none))
+      place(top+right, dy: 0.25in, logo.at(1, default: none))
+    } else if type(logo) == dictionary {
+      place(top+left,  dy: 0.25in, logo.at("left", default: none))
+      place(top+right, dy: 0.25in, logo.at("right", default: none))
+    }
+  }
+
+  set page(
+    header: header,
+    footer: align(right, context { counter(page).display("1") })
+  )
+
+  Slide(title: "Outline", banner: classification)
+
+  show outline.entry: it => link(
+    it.element.location(),
+    it.indented(it.prefix(), it.body())
+  )
+
+  outline(title: none)
+
+  show link: underline
+
   body
 }
