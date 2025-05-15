@@ -205,10 +205,10 @@
     align(center, text(14pt, title_intro))
   }
   if title != none {
-    align(center, text(20pt, strong(title)))
+    align(center, text(24pt, strong(title)))
   }
   if subtitle != none {
-    align(center, text(19pt, strong(subtitle)))
+    align(center, text(18pt, strong(subtitle)))
   }
   if location != none {
     align(center, text(18pt, location))
