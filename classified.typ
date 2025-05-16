@@ -42,39 +42,50 @@
 
 // Wrapper for tables. Adds a banner and formats the headers.
 #let Table(columns: none, caption: none, banner: none, sci: false, header: none, ..fields) = {
+  let footer = none
   let cols = columns
+  fields = fields.pos()
   if(type(cols) == array) {
     cols = cols.len()
   }
-  banner = table.cell(colspan: cols, Colorize(banner, sci: sci))
+  if(banner != none) {
+    banner = table.cell(colspan: cols, Colorize(banner, sci: sci))
+    footer = table.footer(banner)
+  }
   if(header != none) {
     header = header.map(
       it => {
         table.cell(fill: rgb("#1f3864"), text(weight: "bold", fill: white, it))
       }
     )
+    if(banner != none) {
+      header = table.header(banner, ..header)
+    }
+    fields = (header,) + fields
   }
-  header = table.header(
-    banner,
-    ..header,
-  )
+  if(footer != none) {
+    fields = fields + (footer,)
+  }
   figure(caption: caption,
     table(
       columns: columns,
-      header,
-      ..fields,
-      banner
+      ..fields.flatten()
     )
   )
 }
 
 // Wrapper for figures to add a banner.
 #let Figure(caption: none, banner: none, sci: false, content) = {
+  if banner != none {
+    content = (table.cell(stroke: (top: none, bottom: none), content),)
+    content = (table.header(table.cell(stroke: (bottom: none), Colorize(banner, sci: sci))),) + content
+    content = content + (table.footer(table.cell(stroke: (top: none), Colorize(banner))),)
+  } else {
+    content = (table.cell(content),)
+  }
   figure(caption: caption, kind: image,
     table(columns: 1fr, stroke: 1pt,
-      table.cell(stroke: (bottom: none), Colorize(banner, sci: sci)),
-      table.cell(stroke: (top: none, bottom: none), content),
-      table.cell(stroke: (top: none), Colorize(banner)),
+      ..content.flatten()
     )
   )
 }
