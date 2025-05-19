@@ -672,4 +672,13 @@
   show link: underline
 
   body
+
+  if bib != none {
+    set bibliography(title: none, style: "ieee")
+    set par(justify: false)
+    show bibliography: set text(1em)
+    show bibliography: set par(first-line-indent: 0em)
+    Slide(title: "Sources", banner: classification, outlined: false)
+    bib
+  }
 }
