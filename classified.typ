@@ -657,7 +657,7 @@
 
   set page(
     header: header,
-    footer: align(right, context { counter(page).display("1") })
+    footer: align(right, context { text(size: 14pt, counter(page).display("1")) })
   )
 
   Slide(title: "Outline", banner: classification, outlined: false)
