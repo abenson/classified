@@ -518,15 +518,34 @@
   title: none,
   banner: none,
   outlined: true,
+  body
 ) = {
-  pagebreak()
   if banner != none {
     banner = text(14pt, Colorize(banner))
   }
-  place(top+center, dy: -0.5in, banner)
-  place(bottom+center, dy: 0.5in, banner)
-  align(center, heading(level: 1, title, outlined: outlined))
-  line(length: 100%, stroke: 6pt+gradient.linear(color.blue, color.black))
+
+  let slideHeader = rect(width: 100%, stroke: none)[
+    #set align(center)
+
+    #banner
+
+    #heading(level: 1, title, outlined: outlined)
+
+    #line(length: 100%, stroke: 6pt+gradient.linear(color.blue, color.black))
+  ]
+
+  set page(
+    margin: (top: 1.75in),
+    header-ascent: 0.25in,
+    footer-descent: 0.5in,
+    header: slideHeader,
+    footer: grid(columns: (1fr, auto, 1fr),
+      [],
+      banner,
+      align(right, context { text(size: 14pt, counter(page).display("1"))})
+    )
+  )
+  body
 }
 
 #let Brief(
@@ -642,32 +661,30 @@
 
   set text(size: 22pt)
 
-  let header = {
+  let logos = {
     set image(height: 1in)
     if type(logo) == content {
-      place(top+left, dy: 0.25in, logo)
+      place(top+left, dx: 0.5in, dy: 0.25in, logo)
     } else if type(logo) == array {
-      place(top+left,  dy: 0.25in, logo.at(0, default: none))
-      place(top+right, dy: 0.25in, logo.at(1, default: none))
+      place(top+left,  dx: 0.5in, dy: 0.25in, logo.at(0, default: none))
+      place(top+right, dx: -0.5in, dy: 0.25in, logo.at(1, default: none))
     } else if type(logo) == dictionary {
-      place(top+left,  dy: 0.25in, logo.at("left", default: none))
-      place(top+right, dy: 0.25in, logo.at("right", default: none))
+      place(top+left,  dx: 0.5in, dy: 0.25in, logo.at("left", default: none))
+      place(top+right, dx: -0.5in, dy: 0.25in, logo.at("right", default: none))
     }
   }
 
   set page(
-    header: header,
-    footer: align(right, context { text(size: 14pt, counter(page).display("1")) })
+    background: logos,
   )
 
-  Slide(title: "Outline", banner: classification, outlined: false)
 
   show outline.entry: it => link(
     it.element.location(),
     it.indented(it.prefix(), it.body())
   )
 
-  outline(title: none)
+  Slide(title: "Outline", banner: classification, outlined: false, outline(title: none))
 
   show link: underline
 
@@ -678,7 +695,6 @@
     set par(justify: false)
     show bibliography: set text(1em)
     show bibliography: set par(first-line-indent: 0em)
-    Slide(title: "Sources", banner: classification, outlined: false)
-    bib
+    Slide(title: "Sources", banner: classification, outlined: false, bib)
   }
 }
