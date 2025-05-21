@@ -41,7 +41,7 @@
 }
 
 // Wrapper for tables. Adds a banner and formats the headers.
-#let Table(columns: none, caption: none, banner: none, sci: false, header: none, ..fields) = {
+#let Table(columns: none, caption: none, banner: none, sci: false, header: none, breakable: false, ..fields) = {
   let footer = none
   let cols = columns
   fields = fields.pos()
@@ -66,6 +66,7 @@
   if(footer != none) {
     fields = fields + (footer,)
   }
+  show figure: set block(breakable: breakable)
   figure(caption: caption,
     table(
       columns: columns,
