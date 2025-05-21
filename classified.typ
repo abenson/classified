@@ -379,6 +379,9 @@
 
     if classification != none {
       align(center, text(fill: classcolor, size: 17pt, strong(classification)))
+      if classified.at("comment", default: none) != none {
+	      align(center, text(size: 17pt, classified.comment))
+      }
     }
 
     if(abstract != none) {
