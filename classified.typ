@@ -59,7 +59,9 @@
       }
     )
     if(banner != none) {
-      header = table.header(banner, ..header)
+      header = table.header(repeat: true, banner, ..header)
+    } else {
+      header = table.header(repeat: true, ..header)
     }
     fields = (header,) + fields
   }
