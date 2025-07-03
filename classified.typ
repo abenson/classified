@@ -44,6 +44,10 @@
 #let Table(columns: none, caption: none, banner: none, sci: false, header: none, breakable: false, ..fields) = {
   let footer = none
   let cols = columns
+  if(columns == none and header != none) {
+    columns = header.len()
+    cols = columns
+  }
   fields = fields.pos()
   if(type(cols) == array) {
     cols = cols.len()
