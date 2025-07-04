@@ -182,6 +182,13 @@
     show bibliography: set text(1em)
     show bibliography: set par(first-line-indent: 0em)
     if title_page {
+      // If this is the only Appendix, make sure we count from 'A'
+      context {
+        if query(heading.where(supplement: [Appendix])).len() == 1 {
+          counter(heading).update(0)
+        }
+      }
+
       show bibliography: set heading(
         numbering: (first, ..other) =>
           if other.pos().len() == 0 {
