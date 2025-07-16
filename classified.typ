@@ -73,6 +73,7 @@
     fields = fields + (footer,)
   }
   show figure: set block(breakable: breakable)
+  set text(size: 11pt)
   figure(caption: caption,
     table(
       columns: columns,
