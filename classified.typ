@@ -453,7 +453,13 @@
   let footer = grid(columns: (1fr,auto,1fr),
     [],
     align(center, text(size: 12pt, fill: classcolor, strong(classification))),
-    align(right, context { text(size: 12pt, counter(page).display("1")) })
+    align(right,
+      context {
+        if not title_page and counter(page).get().at(0) > 1 {
+          text(size: 12pt, counter(page).display("1"))
+        }
+      }
+    )
   )
 
   set page(
