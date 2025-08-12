@@ -455,7 +455,7 @@
     align(center, text(size: 12pt, fill: classcolor, strong(classification))),
     align(right,
       context {
-        if not title_page and counter(page).get().at(0) > 1 {
+        if (not title_page and counter(page).get().at(0) > 1) or title_page {
           text(size: 12pt, counter(page).display("1"))
         }
       }
