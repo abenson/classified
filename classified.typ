@@ -304,7 +304,10 @@
     keywords: keywords,
   )
 
-  set par(justify: true)
+  set par(
+    justify: true,
+    justification-limits: (tracking: (min: -0.01em, max: 0.01em))
+  )
   set text(size: 12pt)
   show link: underline
 
