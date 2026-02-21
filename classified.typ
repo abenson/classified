@@ -542,6 +542,9 @@
       },
     supplement: "Appendix"
   )
+  set figure(numbering: (..num) =>
+    numbering("A-1", counter(heading).get().first(), num.pos().first())
+  )
   show heading.where(level: 1): it => {
     pagebreak(weak:true)
     it
