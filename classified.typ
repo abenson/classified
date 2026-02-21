@@ -510,6 +510,17 @@
     )
   }
 
+  set figure(numbering: (..num) =>
+    numbering("1-1", counter(heading).get().first(), num.pos().first())
+  )
+
+  show heading.where(level: 1): it => {
+    counter(figure.where(kind: image)).update(0)
+    counter(figure.where(kind: table)).update(0)
+    counter(figure.where(kind: raw)).update(0)
+    it
+  }
+
   body
 
   set par(justify: false)
