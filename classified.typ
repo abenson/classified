@@ -284,6 +284,7 @@
   version: none,
   logo: none,
   border: true,
+  binding: none,
   title_page: false,
   bib: none,
   paper: "us-letter",
@@ -356,6 +357,9 @@
   }
   if title_page {
     set page(footer: none, header: none)
+    if binding == none {
+      binding = 0in
+    }
     if border == true or type(border) == color {
       let border_color = classcolor
       if type(border) == color {
@@ -370,7 +374,7 @@
       } else {
         border = layout(size => {
           rect(
-            width: 100%-1in,
+            width: 100%-1in-(binding/2),
             height: 100%-1in,
             stroke: (size.width * 5%) + border_color
           )
@@ -380,7 +384,7 @@
       border = none
     }
 
-    set page(paper: paper, background: border)
+    set page(paper: paper, margin: (left: 1in+binding), background: move(dx: binding/2, border))
     set align(horizon)
 
     Titles(
