@@ -1,6 +1,6 @@
 [package]
 name = "classified"
-version = "0.7.2"
+version = "0.8.0"
 entrypoint = "classified.typ"
 authors = ["Andrew Benson <abenson+typst@gmail.com>"]
 license = "Unlicense"
