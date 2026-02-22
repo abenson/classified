@@ -284,7 +284,6 @@
   version: none,
   logo: none,
   border: true,
-  binding: none,
   title_page: false,
   bib: none,
   paper: "us-letter",
@@ -357,8 +356,9 @@
   }
   if title_page {
     set page(footer: none, header: none)
-    if binding == none {
-      binding = 0in
+    let binding = 0in
+    if sys.inputs.at("bound", default: "false") == "true" {
+      binding = 0.5in
     }
     if border == true or type(border) == color {
       let border_color = classcolor
