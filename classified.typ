@@ -116,6 +116,7 @@
   let dcablock = none
 
   if classified != none and regex("SECRET|CONFIDENTIAL|\bCLASSIFIED") in classified.overall {
+    set text(size: 10pt)
     dcablock = rect[
       #set align(left)
       #set par(justify:false)
@@ -149,6 +150,7 @@
   cui,
 ) = {
   let cuiblock = none
+  set text(size: 10pt)
   if cui != none {
     let conby = cui.at("controlledby", default: "MISSING!")
     if type(conby) == array {
