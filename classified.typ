@@ -311,6 +311,7 @@
     justification-limits: (tracking: (min: -0.01em, max: 0.01em))
   )
   set text(size: 12pt)
+  show raw: set text(size: 9pt)
   show link: underline
 
   show heading: set text(12pt, weight: "bold")
