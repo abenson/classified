@@ -92,7 +92,7 @@
     content = (table.cell(content),)
   }
   figure(caption: caption, kind: image,
-    table(columns: 1fr, stroke: 1pt,
+    table(columns: 1, stroke: 1pt,
       ..content.flatten()
     )
   )
