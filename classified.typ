@@ -41,7 +41,16 @@
 }
 
 // Wrapper for tables. Adds a banner and formats the headers.
-#let Table(columns: none, caption: none, banner: none, sci: false, header: none, breakable: false, ..fields) = {
+#let Table(
+  columns: none,
+  caption: none,
+  banner: none,
+  sci: false,
+  header: none,
+  banded: false,
+  breakable: false,
+  ..fields
+ ) = {
   let footer = none
   let cols = columns
   if(columns == none and header != none) {
@@ -53,7 +62,7 @@
     cols = cols.len()
   }
   if(banner != none) {
-    banner = table.cell(colspan: cols, Colorize(banner, sci: sci))
+    banner = table.cell(colspan: cols, Colorize(banner, sci: sci), fill: white)
     footer = table.footer(banner)
   }
   if(header != none) {
@@ -78,6 +87,9 @@
   }
   show figure: set block(breakable: breakable)
   set text(size: 11pt)
+  set table(
+    fill: (_, y) => if banded and calc.odd(y) { rgb("DDEAEF")},
+  )
   figure(caption: caption,
     table(
       columns: columns,
