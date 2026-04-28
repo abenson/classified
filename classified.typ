@@ -48,6 +48,7 @@
   sci: false,
   header: none,
   banded: false,
+  label: none,
   breakable: false,
   ..fields
  ) = {
@@ -90,16 +91,21 @@
   set table(
     fill: (_, y) => if banded and calc.odd(y) { rgb("DDEAEF")},
   )
-  figure(caption: caption,
+  [#figure(caption: caption,
     table(
       columns: columns,
       ..fields.flatten()
     )
-  )
+  ) #label]
 }
 
 // Wrapper for figures to add a banner.
-#let Figure(caption: none, banner: none, sci: false, content) = {
+#let Figure(
+  caption: none,
+  banner: none,
+  label: none,
+  sci: false,
+  content) = {
   if banner != none {
     content = (table.cell(stroke: (top: none, bottom: none), content),)
     content = (table.header(table.cell(stroke: (bottom: none), Colorize(banner, sci: sci))),) + content
@@ -107,11 +113,11 @@
   } else {
     content = (table.cell(content),)
   }
-  figure(caption: caption, kind: image,
+  [#figure(caption: caption, kind: image,
     table(columns: 1, stroke: 1pt,
       ..content.flatten()
     )
-  )
+  ) #label]
 }
 
 // Draw CUI and DCA/OCA Blocks
