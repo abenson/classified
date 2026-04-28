@@ -68,6 +68,10 @@
       header = table.header(repeat: true, ..header)
     }
     fields = (header,) + fields
+  } else {
+    if(banner != none) {
+      fields = (banner,) + fields
+    }
   }
   if(footer != none) {
     fields = fields + (footer,)
