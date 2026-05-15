@@ -486,7 +486,6 @@
     outline(target: heading.where(supplement: [Section]))
     outline(target: heading.where(supplement: [Appendix]), title: none, depth: 1)
     pagebreak(weak: true, to:"odd")
-
   }
 
   set heading(numbering: "1.1.1. ")
@@ -571,6 +570,18 @@
   set par(justify: false)
   Bibliography(bib, title_page: title_page)
   set par(justify: true)
+
+  if title_page {
+    set page(footer: none, header: none)
+    let binding = 0in
+    if sys.inputs.at("bound", default: "false") == "true" {
+      binding = 0.5in
+    }
+    pagebreak(to: "odd")
+    align(center+horizon)[This page intentionally left blank.]
+    set page(margin: (right: 1in+binding), background: move(dx: -binding/2, border))
+    pagebreak()
+  }
 }
 
 // The appendixes are for information that does not belong in the main document.
