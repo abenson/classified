@@ -481,11 +481,17 @@
 
     front
 
-    pagebreak(to:"odd", weak:true)
+    pagebreak()
     counter(heading).update(0)
     outline(target: heading.where(supplement: [Section]))
     outline(target: heading.where(supplement: [Appendix]), title: none, depth: 1)
-    pagebreak(weak: true, to:"odd")
+    pagebreak()
+    context {
+      if calc.even(counter(page).get().at(0)) {
+        align(center+horizon)[This page intentionally left blank.]
+        pagebreak()
+      }
+    }
   }
 
   set heading(numbering: "1.1.1. ")
