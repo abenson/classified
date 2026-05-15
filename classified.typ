@@ -447,9 +447,19 @@
   if title_page {
     // The outline and other "front matter" pages should use Roman numerals.
     let footer = grid(columns: (1fr,auto,1fr),
-      [],
+      context {
+        if(calc.even(counter(page).get().at(0))) {
+          text(size: 12pt, counter(page).display("i"))
+        }
+      },
       align(center, text(size: 12pt, fill: classcolor, strong(classification))),
-      align(right, context { text(size: 12pt, counter(page).display("i")) })
+      align(right,
+        context {
+          if(calc.odd(counter(page).get().at(0))) {
+            text(size: 12pt, counter(page).display("i"))
+          }
+        }
+      ),
     )
 
     page(paper,
@@ -483,12 +493,18 @@
 
   // Body pages should be numbered with standard Arabic numerals.
   let footer = grid(columns: (1fr,auto,1fr),
-    [],
+    context {
+      if(calc.even(counter(page).get().at(0))) {
+        text(size: 12pt, counter(page).display("1"))
+      }
+    },
     align(center, text(size: 12pt, fill: classcolor, strong(classification))),
     align(right,
       context {
         if (not title_page and counter(page).get().at(0) > 1) or title_page {
-          text(size: 12pt, counter(page).display("1"))
+          if(calc.odd(counter(page).get().at(0))) {
+            text(size: 12pt, counter(page).display("1"))
+          }
         }
       }
     )
