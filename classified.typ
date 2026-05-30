@@ -583,8 +583,11 @@
     if sys.inputs.at("bound", default: "false") == "true" {
       binding = 0.5in
     }
-    pagebreak(to: "odd")
-    align(center+horizon)[This page intentionally left blank.]
+    context {
+      if calc.odd(counter(page).get().at(0)) {
+        align(center+horizon)[This page intentionally left blank.]
+      }
+    }
     set page(margin: (right: 1in+binding), background: move(dx: -binding/2, border))
     pagebreak()
   }
