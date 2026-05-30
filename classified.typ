@@ -120,6 +120,20 @@
   ) #label]
 }
 
+#let Callout(body) = {
+  v(4pt)
+  align(center, rect(inset: 0pt, fill: gray, move(
+    dx: -4pt, dy: -4pt,
+    rect(
+      width: 80%,
+      inset: 8pt,
+      fill: white,
+      stroke: black,
+      align(left, body)
+    )
+  )))
+}
+
 // Draw CUI and DCA/OCA Blocks
 #let AuthorityBlock(
   // Fields for DCA Block
