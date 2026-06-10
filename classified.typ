@@ -152,8 +152,8 @@
   let dcablock = none
 
   if classified != none and regex("SECRET|CONFIDENTIAL|\bCLASSIFIED") in classified.overall {
-    set text(size: 10pt)
-    dcablock = rect[
+    dcablock = rect(stroke: none)[
+      #set text(size: 10pt)
       #set align(left)
       #set par(justify:false)
       *Classified By:* #classified.at("by", default: "MISSING!") \
@@ -196,7 +196,7 @@
     if type(cats) == array {
       cats = cats.join(", ")
     }
-    cuiblock = rect[
+    cuiblock = rect(stroke: none)[
       #set par(justify:false)
       #set align(left)
       *Controlled By:* #conby \
