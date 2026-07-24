@@ -155,7 +155,6 @@
     dcablock = rect(stroke: none)[
       #set text(size: 10pt)
       #set align(left)
-      #set par(justify:false)
       *Classified By:* #classified.at("by", default: "MISSING!") \
       #if classified.at("reason", default: none) != none {
         [*Reason:* #classified.at("reason") \ ]
@@ -197,7 +196,6 @@
       cats = cats.join(", ")
     }
     cuiblock = rect(stroke: none)[
-      #set par(justify:false)
       #set align(left)
       *Controlled By:* #conby \
       *Categories:* #cats \
@@ -263,7 +261,6 @@
   // A publication date
   date: none,
 ) = {
-  set par(justify: false)
   set text(hyphenate: false)
   if title_intro != none {
     align(center, text(14pt, title_intro))
@@ -286,7 +283,6 @@
   if date != none {
     align(center, text(16pt, date))
   }
-  set par(justify: true)
   set text(hyphenate: true)
 }
 
@@ -342,10 +338,6 @@
     keywords: keywords,
   )
 
-  set par(
-    justify: true,
-    justification-limits: (tracking: (min: -0.01em, max: 0.01em))
-  )
   set text(size: 12pt)
   show raw: set text(size: 9pt)
   show link: underline
@@ -585,6 +577,14 @@
     it
   }
 
+  set par(
+    justify: true,
+    justification-limits: (
+      tracking: (min: -0.01em, max: 0.01em),
+      spacing: ( min: 47%, max: 150%),
+    )
+  )
+
   body
 
   set par(justify: false)
@@ -696,8 +696,6 @@
     author: authors,
     keywords: keywords,
   )
-
-  set par(justify: true)
 
   show heading: set text(32pt, weight: "bold")
 
