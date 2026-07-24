@@ -217,7 +217,7 @@
   title_page: false,
 ) = {
   if biblio != none {
-    set bibliography(title: "References", style: "ieee")
+    set bibliography(title: "References", style: "ieee", full: true)
     show bibliography: set text(1em)
     show bibliography: set par(first-line-indent: 0em)
     if title_page {
