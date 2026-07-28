@@ -106,6 +106,7 @@
   label: none,
   sci: false,
   content) = {
+  set par(justify: false)
   if banner != none {
     content = (table.cell(stroke: (top: none, bottom: none), content),)
     content = (table.header(table.cell(stroke: (bottom: none), Colorize(banner, sci: sci))),) + content
