@@ -10,7 +10,7 @@
   let classcolor = black
   if disableColor == false and classification != none {
     if sci {
-      classcolor = rgb("#ffcc00") // Yellow for any SCI (CLASS//SC,I//ETC)
+      classcolor = rgb("#d5b60a") // Yellow for any SCI (CLASS//SC,I//ETC)
     } else if regex("\bCUI\b|\bCONTROLLED\b") in classification {
        classcolor = rgb("#502b85") // Purple for C(ontrolled) U(Unclass) I(nfo)
     } else if regex("\bU\b|\bUNCLASSIFIED\b") in classification {
