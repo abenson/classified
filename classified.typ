@@ -578,6 +578,7 @@
     it
   }
 
+  set text(costs: (hyphenation: 50%))
   set par(
     justify: true,
     justification-limits: (
