@@ -605,6 +605,7 @@
     }
     set page(margin: (right: 1in+binding), background: move(dx: -binding/2, border))
     pagebreak()
+    align(center+horizon, Colorize(classification))
   }
 }
 
