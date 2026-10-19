@@ -431,9 +431,10 @@
     Logos(logo)
 
     if classification != none {
-      align(center, text(fill: classcolor, size: 17pt, strong(classification)))
+      set par(spacing: 0.65em)
+      align(center, text(fill: classcolor, size: 18pt, strong(classification)))
       if classified != none and classified.at("comment", default: none) != none {
-	      align(center, text(size: 17pt, classified.comment))
+	      align(center, text(size: 14pt, classified.comment))
       }
     }
 
