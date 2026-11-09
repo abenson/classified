@@ -306,6 +306,27 @@
     }))
 }
 
+#let _resize_text(body) = layout(size => {
+  let font_size = text.size
+  let (height,) = measure(
+    block(width: size.width, text(size: font_size)[#body]),
+  )
+  let max_height = size.height;
+
+  while height > max_height {
+      font_size -= 0.2pt
+      height = measure(
+        block(width: size.width, text(size: font_size)[#body]),
+      ).height
+  }
+
+  block(
+      height: height,
+      width: 100%,
+      text(size: font_size)[#body]
+  )
+})
+
 // A full report format.
 #let Report(
   title_intro: none,
@@ -431,10 +452,13 @@
     Logos(logo)
 
     if classification != none {
-      set par(spacing: 0.65em)
-      align(center, text(fill: classcolor, size: 18pt, strong(classification)))
+      {
+        set text(size: 24pt)
+        place(top+center, box(height: 24pt,
+        _resize_text(Colorize(classification))))
+      }
       if classified != none and classified.at("comment", default: none) != none {
-	      align(center, text(size: 14pt, classified.comment))
+        align(center, classified.comment)
       }
     }
 
