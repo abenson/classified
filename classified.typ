@@ -783,6 +783,8 @@
     place(bottom, dy: 0.5in, rect(width: 100%, stroke: none, align(center, banner)))
   }
 
+  set align(horizon)
+
   Titles(
     title_intro: title_intro,
     title: title,
@@ -792,8 +794,6 @@
     authors: authors,
     date: date)
 
-  Logos(logo, height: 2in, width: 50%)
-
   if classification != none {
     align(center,
       [Overall Brief Classification is:\ ] +
@@ -801,6 +801,8 @@
       [ \ ] +
       comment)
   }
+
+  Logos(logo, height: 2in, width: 50%)
 
   place(bottom+left, AuthorityBlock(classified))
   place(bottom+right, CUIDesignatorBlock(cui))
@@ -820,10 +822,11 @@
     }
   }
 
+  set align(top)
+
   set page(
     background: logos,
   )
-
 
   show outline.entry: it => link(
     it.element.location(),
