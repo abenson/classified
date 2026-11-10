@@ -677,7 +677,7 @@
 
     #banner
 
-    #heading(level: 1, title, outlined: outlined)
+    #heading(level: 1, title, outlined: false)
 
     #line(length: 100%, stroke: 6pt+gradient.linear(color.blue, color.black))
   ]
@@ -693,6 +693,7 @@
       align(right, context { text(size: 14pt, counter(page).display("1"))})
     )
   )
+  place(top, float: false, hide(heading(level: 1, title, outlined: outlined)))
   body
 }
 
