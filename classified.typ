@@ -726,6 +726,8 @@
     keywords: keywords,
   )
 
+  show footnote.entry: set text(size: 14pt)
+
   show heading: set text(32pt, weight: "bold")
 
   set enum(indent: 0.25in)
