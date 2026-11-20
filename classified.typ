@@ -279,7 +279,7 @@
     align(center, text(version))
   }
   if authors != () {
-    align(center, authors.join(", "))
+    align(center, text(14pt, authors.join(", ")))
   }
   if date != none {
     align(center, text(16pt, date))
