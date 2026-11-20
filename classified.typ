@@ -668,6 +668,8 @@
   outlined: true,
   body
 ) = {
+  set heading(offset: 1)
+  show heading.where(level: 2): underline
   if banner != none {
     banner = text(14pt, Colorize(banner))
   }
