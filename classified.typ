@@ -834,7 +834,15 @@
   )
 
   if tocslide {
-    Slide(title: "Outline", banner: classification, outlined: false, outline(title: none))
+    Slide(
+      title: "Outline",
+      banner: classification,
+      outlined: false,
+      outline(
+        title: none,
+        depth: 1,
+      )
+    )
   }
 
   show link: underline
