@@ -787,26 +787,22 @@
     place(bottom, dy: 0.5in, rect(width: 100%, stroke: none, align(center, banner)))
   }
 
-  set align(horizon)
+  block(text(36pt, title))
+  text(18pt, subtitle)
 
-  Titles(
-    title_intro: title_intro,
-    title: title,
-    subtitle: subtitle,
-    location: location,
-    version: version,
-    authors: authors,
-    date: date)
+  Logos(logo, height: 2in, width: 50%)
+
+  align(center, text(18pt, authors.join(", ")))
+  align(center, text(18pt, date))
 
   if classification != none {
     align(center,
-      [Overall Brief Classification is:\ ] +
-      text(fill: classcolor, size: 17pt, strong(classification)) +
+      [OVERALL CLASSIFICATION:\ ] +
+      text(size: 20pt, Colorize(classification)) +
       [ \ ] +
       comment)
   }
 
-  Logos(logo, height: 2in, width: 50%)
 
   place(bottom+left, AuthorityBlock(classified))
   place(bottom+right, CUIDesignatorBlock(cui))
