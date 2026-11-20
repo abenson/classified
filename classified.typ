@@ -711,6 +711,7 @@
   border: true,
   bib: none,
   wide: true,
+  tocslide: true,
   keywords: (),
   body
 ) = {
@@ -836,7 +837,9 @@
     it.indented(it.prefix(), it.body())
   )
 
-  Slide(title: "Outline", banner: classification, outlined: false, outline(title: none))
+  if tocslide {
+    Slide(title: "Outline", banner: classification, outlined: false, outline(title: none))
+  }
 
   show link: underline
 
