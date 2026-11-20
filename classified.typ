@@ -291,19 +291,19 @@
     // 3in provides a decent logo or a decent size gap
     // If we have more than one logo, resize them by y-0.25in each, then
     // wrap with a rect to preserve the 3in height
-    align(center, rect(height: height, width: width, stroke: none, {
+    align(center,
       if type(logo) == content {
         set image(height: height, fit: "contain")
         logo
       } else if type(logo) == array {
         set image(height: height - (0.25in * logo.len()))
-        grid(columns: (1fr,)*logo.len(), ..logo.flatten())
+        table(columns: logo.len(), stroke: none, inset: (x:10%), ..logo.flatten())
       } else if type(logo) == dictionary {
         // Keeping with the array of 2 logos, height is 3in-(0.25in*2)
         set image(height: (height - 0.25in*2), fit: "contain")
-        grid(columns: (1fr,)*2, logo.left, logo.right)
+        table(columns: 2, stroke: none, inset: (x:10%), logo.left, logo.right)
       }
-    }))
+    )}
 }
 
 #let _resize_text(body) = layout(size => {
