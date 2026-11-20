@@ -698,7 +698,6 @@
 }
 
 #let Brief(
-  title_intro: none,
   title: none,
   subtitle: none,
   location: none,
@@ -718,7 +717,6 @@
 
   let meta_title = title
 
-  if title_intro != none { meta_title = title_intro + " - " + meta_title }
   if subtitle != none { meta_title = meta_title + " - " + subtitle }
 
   set document(
